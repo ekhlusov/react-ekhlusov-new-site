@@ -33,28 +33,43 @@ export default function HeaderSocialBlock(props) {
       title: "LinkedIn",
       icon: faLinkedinIn
     },
-    { link: "mailto:ekhlusov@gmail.com", title: "Почта", icon: faAt }
+    { link: "mailto:ekhlusov@gmail.com", title: "Email", icon: faAt }
     // TODO - сделать копирование в буфер
   ];
 
   return (
-    <div className="sidebar__social">
-      {/* TODO: поменять класс */}
+    <>
+      <div className="sidebar__social">
+        {/* TODO: поменять класс */}
 
-      <a href="#mk">
-        <img src={mkLogo} alt="Мой круг" className="sidebar__social--mkLogo" />
-      </a>
-
-      {social.map((item, index) => (
-        <a
-          href={item.link}
-          key={index}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FontAwesomeIcon icon={item.icon} />
+        <a href="#mk">
+          <img
+            src={mkLogo}
+            alt="Мой круг"
+            className="sidebar__social--mkLogo"
+          />
         </a>
-      ))}
-    </div>
+
+        {social.map((item, index) => (
+          <a
+            href={item.link}
+            key={index}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={item.icon} />
+          </a>
+        ))}
+      </div>
+
+      <div className="sidebar__social--print-block">
+        {social.map((item, index) => (
+          <p className="no-bottom-margin">
+            <b>{item.title}</b>:{" "}
+            {item.title === "Email" ? "ekhlusov@gmail.com" : "ekhlusov"}
+          </p>
+        ))}
+      </div>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { Container } from "reactstrap";
 import { Row, Col } from "reactstrap";
 import { DataContext } from "./components/helpers/data-context";
 import StickyBox from "react-sticky-box";
+import { ClipLoader } from "react-spinners";
 
 function App() {
   // eslint-disable-next-line
@@ -21,7 +22,11 @@ function App() {
   const [data, loading] = useFetch(GET_USER_URL);
 
   if (loading) {
-    return "Загрузка...";
+    return (
+      <div className="loading-bar">
+        <ClipLoader sizeUnit={"px"} size={50} color={"#4e4e4e"} />
+      </div>
+    );
   }
 
   return (
@@ -29,7 +34,11 @@ function App() {
       <DataContext.Provider value={data}>
         <Row>
           <Col md="4">
-            <StickyBox offsetTop={10} offsetBottom={10}>
+            <StickyBox
+              offsetTop={10}
+              offsetBottom={10}
+              className="sticky-block"
+            >
               <Sidebar />
             </StickyBox>
           </Col>

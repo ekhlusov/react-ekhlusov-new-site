@@ -2,6 +2,7 @@ import React from "react";
 import striptags from "striptags";
 import HeaderSocialBlock from "./HeaderSocialBlock";
 import { DataContext } from "./helpers/data-context";
+import SmoothImage from "react-smooth-image";
 
 function Sidebar(props) {
   const data = React.useContext(DataContext);
@@ -9,9 +10,10 @@ function Sidebar(props) {
   return (
     <div className="sidebar">
       <div className="sidebar__photo">
-        <img
+        <SmoothImage
           src="https://habrastorage.org/getpro/moikrug/uploads/user/100/011/208/4/avatar/medium_b8a19ae5277b9324ce7ce8e7ac20c2a2.jpg"
           alt={data.full_name}
+          transitionTime={1.0}
         />
       </div>
 
