@@ -309,6 +309,19 @@ code {
   margin-bottom: 0;
 }
 
+.download-button {
+  svg {
+    transition: $mainTransition;
+    color: $bsGray;
+  }
+
+  &:hover {
+    svg {
+      color: #000;
+    }
+  }
+}
+
 // Print
 @media print {
   body {

@@ -4,11 +4,15 @@ import WorkExperience from "./WorkExperience";
 import Skills from "./Skills";
 import Education from "./Education";
 
+import Fade from "react-reveal/Fade";
+
 function RightContainer(props) {
   return (
     <>
-      <Skills />
-      <WorkExperience />
+      <Fade>
+        <Skills />
+        <WorkExperience />
+      </Fade>
       <Education />
     </>
   );

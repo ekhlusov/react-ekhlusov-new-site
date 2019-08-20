@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import humanizeDuration from "humanize-duration";
 import "moment/locale/ru";
-
+import DownloadButtons from "../DownloadButtons";
 // Нормальное отображение общего опыта
 export function normalizedDuration(months) {
   return humanizeDuration(
@@ -37,10 +37,17 @@ export function TitleWithLines(props) {
       <hr />
       <h4>
         {props.text}
+
         {props.exp && (
           <span className="header-duration">
             {normalizedDuration(props.exp)}
           </span>
+        )}
+
+        {props.downloadButtons && (
+          <div className="header-duration">
+            <DownloadButtons />
+          </div>
         )}
       </h4>
       <hr />

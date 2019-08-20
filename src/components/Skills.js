@@ -23,7 +23,7 @@ function Skills(props) {
 
   return (
     <div className="right-container__skills">
-      <TitleWithLines text="Профессиональные навыки" />
+      <TitleWithLines text="Профессиональные навыки" downloadButtons={true} />
 
       <div className="right-container__skills--block">
         {skills.join(" • ")}
