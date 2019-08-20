@@ -3,7 +3,6 @@ import React from "react";
 import WorkExperience from "./WorkExperience";
 import Skills from "./Skills";
 import Education from "./Education";
-import ContactForm from "./ContactForm";
 
 function RightContainer(props) {
   return (
@@ -11,8 +10,6 @@ function RightContainer(props) {
       <Skills />
       <WorkExperience />
       <Education />
-      <ContactForm />
-      <hr />
     </>
   );
 }

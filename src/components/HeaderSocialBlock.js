@@ -10,6 +10,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import mkLogo from "../assets/images/moi_krug_logo.png";
 
+import copy from "copy-to-clipboard";
+
 export default function HeaderSocialBlock(props) {
   const social = [
     {
@@ -33,7 +35,12 @@ export default function HeaderSocialBlock(props) {
       title: "LinkedIn",
       icon: faLinkedinIn
     },
-    { link: "mailto:ekhlusov@gmail.com", title: "Email", icon: faAt }
+    {
+      link: "mailto:ekhlusov@gmail.com",
+      title: "Email",
+      icon: faAt,
+      copy: true
+    }
     // TODO - сделать копирование в буфер
   ];
 
@@ -41,8 +48,7 @@ export default function HeaderSocialBlock(props) {
     <>
       <div className="sidebar__social">
         {/* TODO: поменять класс */}
-
-        <a href="#mk">
+        <a href="https://moikrug.ru/ekhlusov" target="_blank">
           <img
             src={mkLogo}
             alt="Мой круг"
