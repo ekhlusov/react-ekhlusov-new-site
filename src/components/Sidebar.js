@@ -1,8 +1,8 @@
 import React from "react";
-import striptags from "striptags";
 import HeaderSocialBlock from "./HeaderSocialBlock";
 import { DataContext } from "./helpers/data-context";
 import SmoothImage from "react-smooth-image";
+import parse from "html-react-parser";
 
 const Sidebar = () => {
   const data = React.useContext(DataContext);
@@ -25,7 +25,7 @@ const Sidebar = () => {
         <p>
           {data.location.city}, {data.age} лет
         </p>
-        <p className="sidebar__info--about">{striptags(data.about)}</p>
+        <div className="sidebar__info--about">{parse(data.about)}</div>
       </div>
 
       <hr />
