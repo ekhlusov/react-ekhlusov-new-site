@@ -301,6 +301,11 @@ code {
 }
 
 @media (max-width: 800px) {
+  .main {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   .react-reveal {
     opacity: 1 !important;
   }
