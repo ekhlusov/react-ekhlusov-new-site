@@ -2,9 +2,9 @@ import React from "react";
 import moment from "moment";
 import humanizeDuration from "humanize-duration";
 import "moment/locale/ru";
-import DownloadButtons from "../DownloadButtons";
+import PrintButton from "../PrintButton";
 // Нормальное отображение общего опыта
-export function normalizedDuration(months) {
+export const normalizedDuration = months => {
   return humanizeDuration(
     moment
       .duration({ months: months })
@@ -12,10 +12,10 @@ export function normalizedDuration(months) {
       .toString(),
     { delimiter: " и ", language: "ru", units: ["y", "mo"], round: true }
   );
-}
+};
 
 // Нормальное отображение опыта по каждому работадателю
-export function normalizedCompanyDuration({ from, to }) {
+export const normalizedCompanyDuration = ({ from, to }) => {
   let fromU = moment(from);
   let toU = to ? moment(to) : moment();
 
@@ -27,10 +27,10 @@ export function normalizedCompanyDuration({ from, to }) {
     units: ["y", "mo"],
     round: true
   });
-}
+};
 
 // Заголовок с линиями
-export function TitleWithLines(props) {
+export const TitleWithLines = props => {
   // перенести в компонент опыт
   return props.text ? (
     <div className="lines-title">
@@ -44,13 +44,9 @@ export function TitleWithLines(props) {
           </span>
         )}
 
-        {props.downloadButtons && (
-          <div className="header-duration">
-            <DownloadButtons />
-          </div>
-        )}
+        {props.printButton && <PrintButton />}
       </h4>
       <hr />
     </div>
   ) : null;
-}
+};

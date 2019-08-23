@@ -5,7 +5,7 @@ import parse from "html-react-parser";
 import { DataContext } from "./helpers/data-context";
 import { TitleWithLines } from "./helpers/helpers";
 
-function WorkExperience(props) {
+const WorkExperience = () => {
   const data = React.useContext(DataContext);
 
   return (
@@ -50,6 +50,6 @@ function WorkExperience(props) {
       </div>
     </>
   );
-}
+};
 
 export default WorkExperience;

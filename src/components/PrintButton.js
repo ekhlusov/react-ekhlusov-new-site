@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf } from "@fortawesome/free-regular-svg-icons";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "reactstrap";
 
-export default function FloatingButton(props) {
+const PrintButton = () => {
   const [tooltipIsOpen, setTooltipIsOpen] = useState(false);
 
   return (
@@ -13,17 +13,17 @@ export default function FloatingButton(props) {
         placement="left"
         isOpen={tooltipIsOpen}
         autohide={true}
-        target="download-button"
+        target="print-button"
         toggle={() => setTooltipIsOpen(!tooltipIsOpen)}
       >
-        Скачать резюме
+        Распечатать резюме
       </Tooltip>
 
-      <div class="download-button" id="download-button">
-        <a href="#downloadPdf">
-          <FontAwesomeIcon icon={faFilePdf} size="2x" />
-        </a>
+      <div className="print-button" id="print-button" onClick={window.print}>
+        <FontAwesomeIcon icon={faPrint} />
       </div>
     </>
   );
-}
+};
+
+export default PrintButton;

@@ -9,16 +9,13 @@ import StickyBox from "react-sticky-box";
 import { ClipLoader } from "react-spinners";
 import FloatingButton from "./components/FloatingButton";
 
-function App() {
-  // eslint-disable-next-line
-  {
-    /*const TOKEN = process.env.REACT_APP_MK_TOKEN;
+const App = () => {
+  const TOKEN = process.env.REACT_APP_MK_TOKEN;
   const GET_USER_URL =
     "https://api.moikrug.ru/v1/integrations/users/ekhlusov?access_token=" +
     TOKEN;
-    */
-  }
-  const GET_USER_URL = "https://ekhlusov.ru/ekhlusov.json";
+
+  //const GET_USER_URL = "https://ekhlusov.ru/ekhlusov.json";
 
   const [data, loading] = useFetch(GET_USER_URL);
 
@@ -54,6 +51,6 @@ function App() {
       <FloatingButton />
     </>
   );
-}
+};
 
 export default App;

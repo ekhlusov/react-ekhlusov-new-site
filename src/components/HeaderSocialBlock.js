@@ -12,7 +12,11 @@ import mkLogo from "../assets/images/moi_krug_logo.png";
 
 import copy from "copy-to-clipboard";
 
-export default function HeaderSocialBlock(props) {
+const copyEmail = () => {
+  copy("ekhlusov@gmail.com");
+};
+
+const HeaderSocialBlock = () => {
   const social = [
     {
       link: "https://telegram.me/ekhlusov",
@@ -48,7 +52,11 @@ export default function HeaderSocialBlock(props) {
     <>
       <div className="sidebar__social">
         {/* TODO: поменять класс */}
-        <a href="https://moikrug.ru/ekhlusov" target="_blank">
+        <a
+          href="https://moikrug.ru/ekhlusov"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img
             src={mkLogo}
             alt="Мой круг"
@@ -62,6 +70,9 @@ export default function HeaderSocialBlock(props) {
             key={index}
             target="_blank"
             rel="noopener noreferrer"
+            {...(item.copy === true
+              ? { onClick: copyEmail, target: "_self" }
+              : {})}
           >
             <FontAwesomeIcon icon={item.icon} />
           </a>
@@ -70,7 +81,7 @@ export default function HeaderSocialBlock(props) {
 
       <div className="sidebar__social--print-block">
         {social.map((item, index) => (
-          <p className="no-bottom-margin">
+          <p className="no-bottom-margin" key={index}>
             <b>{item.title}</b>:{" "}
             {item.title === "Email" ? "ekhlusov@gmail.com" : "ekhlusov"}
           </p>
@@ -78,4 +89,6 @@ export default function HeaderSocialBlock(props) {
       </div>
     </>
   );
-}
+};
+
+export default HeaderSocialBlock;

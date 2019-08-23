@@ -3,7 +3,7 @@ import Moment from "react-moment";
 import "moment/locale/ru";
 import { normalizedCompanyDuration } from "./helpers/helpers";
 
-function WorkPeriod({ period, show }) {
+const WorkPeriod = ({ period, show }) => {
   return (
     <>
       <div className="right-container__work-experience--info-block--item-period">
@@ -28,6 +28,6 @@ function WorkPeriod({ period, show }) {
       </div>
     </>
   );
-}
+};
 
 export default WorkPeriod;

@@ -6,7 +6,7 @@ import Education from "./Education";
 
 import Fade from "react-reveal/Fade";
 
-function RightContainer(props) {
+const RightContainer = () => {
   return (
     <>
       <Fade>
@@ -16,6 +16,6 @@ function RightContainer(props) {
       <Education />
     </>
   );
-}
+};
 
 export default RightContainer;

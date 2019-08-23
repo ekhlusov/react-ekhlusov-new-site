@@ -4,7 +4,7 @@ import { TitleWithLines } from "./helpers/helpers";
 
 // Думаю этот раздел не очень нужен
 
-function Skills(props) {
+const Skills = () => {
   // Не будем получать лучше :-)
   // const data = React.useContext(DataContext);
 
@@ -23,7 +23,7 @@ function Skills(props) {
 
   return (
     <div className="right-container__skills">
-      <TitleWithLines text="Профессиональные навыки" downloadButtons={true} />
+      <TitleWithLines text="Профессиональные навыки" printButton={true} />
 
       <div className="right-container__skills--block">
         {skills.join(" • ")}
@@ -38,6 +38,6 @@ function Skills(props) {
       </div>
     </div>
   );
-}
+};
 
 export default Skills;

@@ -4,7 +4,7 @@ import HeaderSocialBlock from "./HeaderSocialBlock";
 import { DataContext } from "./helpers/data-context";
 import SmoothImage from "react-smooth-image";
 
-function Sidebar(props) {
+const Sidebar = () => {
   const data = React.useContext(DataContext);
 
   return (
@@ -33,6 +33,6 @@ function Sidebar(props) {
       <HeaderSocialBlock />
     </div>
   );
-}
+};
 
 export default Sidebar;

@@ -4,7 +4,7 @@ import WorkPeriod from "./WorkPeriod";
 import { DataContext } from "./helpers/data-context";
 import { TitleWithLines } from "./helpers/helpers";
 
-function Education(props) {
+const Education = props => {
   const data = React.useContext(DataContext);
 
   return (
@@ -33,6 +33,6 @@ function Education(props) {
       </div>
     </>
   );
-}
+};
 
 export default Education;

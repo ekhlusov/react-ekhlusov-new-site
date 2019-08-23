@@ -290,9 +290,20 @@ code {
 }
 
 // Misc
+.hidden {
+  display: none !important;
+}
 
-.right-container > div:first-child .lines-title > hr:first-child {
-  display: none;
+@media (min-width: 800px) {
+  .right-container > div:first-child .lines-title > hr:first-child {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .react-reveal {
+    opacity: 1 !important;
+  }
 }
 
 .lines-title > h4 {
@@ -309,7 +320,8 @@ code {
   margin-bottom: 0;
 }
 
-.download-button {
+.print-button {
+  cursor: pointer;
   svg {
     transition: $mainTransition;
     color: $bsGray;
@@ -334,8 +346,11 @@ code {
   }
 
   .sidebar__social,
+  .print-button,
+  .tooltip-arrow,
+  .tooltip,
   .right-container__contact-form {
-    display: none;
+    display: none !important;
   }
 
   .sticky-block {
