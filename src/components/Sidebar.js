@@ -3,6 +3,7 @@ import HeaderSocialBlock from "./HeaderSocialBlock";
 import { DataContext } from "./helpers/data-context";
 import SmoothImage from "react-smooth-image";
 import parse from "html-react-parser";
+import me from "../assets/images/me.jpg";
 
 const Sidebar = () => {
   const data = React.useContext(DataContext);
@@ -10,11 +11,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__photo">
-        <SmoothImage
-          src="https://habrastorage.org/getpro/moikrug/uploads/user/100/011/208/4/avatar/medium_b8a19ae5277b9324ce7ce8e7ac20c2a2.jpg"
-          alt={data.full_name}
-          transitionTime={1.0}
-        />
+        <SmoothImage src={me} alt={data.full_name} transitionTime={0.5} />
       </div>
 
       <hr />
