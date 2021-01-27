@@ -48,8 +48,16 @@ code {
 .sidebar {
   //width: 100%;
   &__photo {
+    transition: ease-in 0.2s;
     border: 1px solid $bsGray;
     box-shadow: $mainBoxShadow;
+
+    filter: grayscale(1) brightness(120%) contrast(85%);
+
+    &:hover {
+      filter: none;
+    }
+
     img {
       height: auto;
       width: 100%;
@@ -99,6 +107,7 @@ code {
       &:hover {
         background-color: $main-bg-color;
         box-shadow: $mainBoxShadow;
+
         img {
           filter: brightness(93%);
         }
@@ -121,12 +130,14 @@ code {
   &__work-experience {
     &--info-block {
       margin-bottom: 2.5rem;
+
       &--item {
         &-period {
           font-size: 13px;
           color: #888;
           display: inline-block;
           font-weight: 500;
+
           &:first-letter {
             //text-transform: uppercase;
           }
@@ -148,6 +159,7 @@ code {
           font-size: 1rem;
           font-weight: bold;
           margin-bottom: 4px;
+
           &:first-letter {
             text-transform: uppercase;
           }
@@ -155,6 +167,7 @@ code {
 
         &-desc {
           font-size: 14px;
+
           p {
             margin-bottom: 0;
           }
@@ -173,12 +186,14 @@ code {
   &__education {
     &--info-block {
       margin-bottom: 2.5rem;
+
       &--item {
         &-period {
           font-size: 12px;
           color: #888;
           display: inline-block;
           font-weight: 300;
+
           &:first-letter {
             //text-transform: uppercase;
           }
@@ -266,6 +281,7 @@ code {
     textarea {
       transition: $mainTransition;
       border-radius: 0;
+
       &:focus {
         border-color: $main-bg-color;
         box-shadow: $mainBoxShadow;
@@ -278,6 +294,7 @@ code {
 
 .loading-bar {
   transition: $mainTransition;
+
   div {
     transition: $mainTransition;
     position: absolute;
@@ -327,6 +344,7 @@ code {
 
 .print-button {
   cursor: pointer;
+
   svg {
     transition: $mainTransition;
     color: $bsGray;
