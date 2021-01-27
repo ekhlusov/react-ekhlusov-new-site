@@ -17,12 +17,14 @@ const Sidebar = () => {
       <hr />
 
       <div className="sidebar__info">
-        <h1>{data.full_name}</h1>
-        <h2>{data.resume_headline}</h2>
+        <h1>{data?.info?.fullName}</h1>
+        <h2>{data?.info?.headline}</h2>
         <p>
-          {data.location.city}, {data.age} лет
+          {data?.location?.city}, {data?.age} лет
         </p>
-        <div className="sidebar__info--about">{parse(data.about)}</div>
+        {data?.about && (
+          <div className="sidebar__info--about">{parse(data?.about)}</div>
+        )}
       </div>
 
       <hr />

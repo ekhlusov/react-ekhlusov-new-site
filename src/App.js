@@ -10,7 +10,7 @@ import { ClipLoader } from "react-spinners";
 import FloatingButton from "./components/FloatingButton";
 
 const App = () => {
-  const GET_USER_URL = "https://ekhlusov.ru/ekhlusov.json";
+  const GET_USER_URL = "http://localhost:8080/ek_backend-1.0-SNAPSHOT/api/v1/info";
 
   const [data, loading] = useFetch(GET_USER_URL);
 

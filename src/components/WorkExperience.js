@@ -11,34 +11,34 @@ const WorkExperience = () => {
   return (
     <>
       <div className="right-container__work-experience">
-        <TitleWithLines text="Опыт работы" exp={data.experience_total} />
+        <TitleWithLines text="Опыт работы" exp={data?.experience_total} />
 
-        {data.experiences.map((item, index) => (
+        {data?.experiences?.map((item, index) => (
           <div
             key={index}
             className="right-container__work-experience--info-block"
           >
             <div className="right-container__work-experience--info-block--item">
               <WorkPeriod
-                period={{ from: item.start_date, to: item.end_date }}
+                period={{ from: item?.start_date, to: item?.end_date }}
               />
 
               <p className="right-container__work-experience--info-block--item-cn">
-                {item.company_name}
+                {item?.company_name}
               </p>
 
               <p className="right-container__work-experience--info-block--item-city">
-                {item.location.city}
+                {item?.location.city}
               </p>
 
               <p className="right-container__work-experience--info-block--item-pos">
-                {item.position}
+                {item?.position}
               </p>
 
               <div className="right-container__work-experience--info-block--item-desc">
-                {parse(item.description, {
+                {parse(item?.description, {
                   replace: function(domNode) {
-                    if (domNode.data === "\n") {
+                    if (domNode?.data === "\n") {
                       return <br />;
                     }
                   }
