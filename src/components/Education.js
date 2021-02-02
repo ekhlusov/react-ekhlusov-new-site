@@ -1,11 +1,23 @@
 import React from "react";
 import WorkPeriod from "./WorkPeriod";
-
-import { DataContext } from "./helpers/data-context";
 import { TitleWithLines } from "./helpers/helpers";
 
 const Education = (props) => {
-  const data = React.useContext(DataContext);
+  const data = {
+    university_educations: [
+      {
+        start_date: "2010-09-01",
+        end_date: "2015-07-01",
+        university_name: "Белгородский государственный университет",
+        faculty_name: "Педагогический",
+        location: {
+          city: "Белгород",
+          country: "Россия",
+        },
+        description: "Учитель английского",
+      },
+    ],
+  };
 
   return (
     <>

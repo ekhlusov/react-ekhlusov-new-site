@@ -1,43 +1,22 @@
 import React from "react";
 //import { DataContext } from "./helpers/data-context";
 import { TitleWithLines } from "./helpers/helpers";
+import { DataContext } from "./helpers/data-context";
 
 // Думаю этот раздел не очень нужен
 
 const Skills = () => {
-  // Не будем получать лучше :-)
-  // const data = React.useContext(DataContext);
+	const data = React.useContext(DataContext);
 
-  const skills = [
-    "PHP",
-    "Yii2",
-    "MySQL",
-    "Git",
-    "JavaScript",
-    "Docker",
-    "Linux",
-    "Nginx",
-    "Bootstrap",
-    "Верстка сайтов и Email-писем"
-  ];
+	return (
+		<div className="right-container__skills">
+			<TitleWithLines text="Профессиональные навыки" printButton={true} />
 
-  return (
-    <div className="right-container__skills">
-      <TitleWithLines text="Профессиональные навыки" printButton={true} />
-
-      <div className="right-container__skills--block">
-        {skills.join(" • ")}
-        {/*data.skills.map(skill => (
-          <div
-            key={skill.alias_name}
-            className="right-container__skills--block--item"
-          >
-            <span>{skill.title}</span>
-          </div>
-        ))*/}
-      </div>
-    </div>
-  );
+			<div className="right-container__skills--block">
+				{data?.skills?.join(" • ")}
+			</div>
+		</div>
+	);
 };
 
 export default Skills;

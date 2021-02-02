@@ -1,0 +1,14 @@
+.right-container__achievements {
+	&--info-block {
+		margin-bottom: 5px;
+		font-size: 15px;
+
+		a {
+			color: var(--color-black);
+
+			&:hover {
+				color: var(--color-accent-gray);
+			}
+		}
+	}
+}

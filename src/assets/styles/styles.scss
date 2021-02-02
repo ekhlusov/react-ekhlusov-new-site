@@ -1,0 +1,355 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800,900&display=swap&subset=cyrillic");
+
+// Constants
+$main-bg-color: #eeeeee;
+$gray-border: 1px solid $main-bg-color;
+$montserat: "Montserrat", sans-serif;
+$mkBlack: #4e4e4e;
+$mainBoxShadow: 0px 3px 5px 0 rgba(174, 174, 174, 0.5);
+$mainTransition: ease 0.5s;
+
+$bsGray: #ced4da;
+
+// Css
+html {
+	background: $main-bg-color;
+}
+
+body {
+	margin: 0;
+	font-family: $montserat;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+*:not(i) {
+	font-family: $montserat;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
+}
+
+#root {
+	background: $main-bg-color;
+}
+
+.main {
+	background: #fff;
+	//border: $gray-border;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	padding: 1rem;
+	box-shadow: 0px 3px 5px 0 rgba(174, 174, 174, 0.5);
+}
+
+// Sidebar
+.sidebar {
+	//width: 100%;
+	&__photo {
+		transition: ease-in 0.2s;
+		border: 1px solid $bsGray;
+		box-shadow: $mainBoxShadow;
+
+		filter: grayscale(1) brightness(120%) contrast(85%);
+
+		&:hover {
+			filter: none;
+		}
+
+		img {
+			height: auto;
+			width: 100%;
+		}
+	}
+
+	&__info {
+		h1 {
+			font-weight: 700 !important;
+			// margin-top: 2rem !important;
+			font-size: 2rem;
+		}
+
+		h2 {
+			font-size: 1.3rem;
+		}
+
+		&--about {
+			font-size: 0.9rem;
+			// text-align: justify;
+		}
+	}
+
+	&__social {
+		display: flex;
+		justify-content: space-between;
+
+		&--print-block {
+			display: none;
+		}
+
+		a {
+			transition: $mainTransition;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 1px solid $bsGray;
+			height: 3rem;
+			width: 2.8rem;
+			background-color: #fff;
+
+			svg {
+				color: $mkBlack;
+				font-size: 1.3rem;
+			}
+
+			&:hover {
+				background-color: $main-bg-color;
+				box-shadow: $mainBoxShadow;
+
+				img {
+					filter: brightness(93%);
+				}
+			}
+		}
+
+		&--mkLogo {
+			width: 100%;
+			height: auto;
+			overflow: hidden;
+			filter: brightness(100%);
+			transition: $mainTransition;
+		}
+	}
+}
+
+// Right container
+.right-container {
+	// Work experience
+	&__work-experience {
+		&--info-block {
+			margin-bottom: 2.5rem;
+
+			&--item {
+				&-period {
+					font-size: 13px;
+					color: #888;
+					display: inline-block;
+					font-weight: 500;
+
+					&:first-letter {
+						//text-transform: uppercase;
+					}
+				}
+
+				&-cn {
+					font-weight: 700;
+					font-size: 1.1rem;
+					margin-bottom: 0;
+					color: #777;
+					display: flex;
+				}
+
+				&-city {
+					font-size: 14px;
+					color: #777;
+				}
+
+				&-pos {
+					font-size: 1rem;
+					font-weight: bold;
+					margin-bottom: 4px;
+
+					&:first-letter {
+						text-transform: uppercase;
+					}
+				}
+
+				&-desc {
+					font-size: 14px;
+
+					p {
+						margin-bottom: 0;
+					}
+
+					br {
+						content: " ";
+						margin: 5px 0;
+						display: block;
+					}
+				}
+			}
+		}
+	}
+
+	// Education
+	&__education {
+		&--info-block {
+			margin-bottom: 2.5rem;
+
+			&--item {
+				&-period {
+					font-size: 12px;
+					color: #888;
+					display: inline-block;
+					font-weight: 300;
+
+					&:first-letter {
+						//text-transform: uppercase;
+					}
+				}
+
+				&-un {
+					font-weight: 700;
+					font-size: 1.1rem;
+					margin-bottom: 0;
+					color: #777;
+				}
+
+				&-faculty {
+					font-size: 14px;
+					color: #777;
+				}
+			}
+		}
+	}
+
+	// Skills
+	&__skills {
+		&--block {
+			display: flex;
+			justify-content: space-between;
+			align-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			margin-top: 1rem;
+			font-size: 14px;
+			width: 100%;
+
+			&--item {
+				display: flex;
+				justify-content: space-between;
+				&__dot {
+					font-size: 16px;
+				}
+			}
+
+			&:nth-letter(1) {
+				font-weight: 900;
+			}
+
+			// &--item {
+			//   margin: 0 5px 5px;
+			//   cursor: default;
+			//   span {
+			//     display: inline-block;
+			//     background-color: #fff;
+			//     border: $gray-border;
+			//     font-size: 12px;
+			//     font-weight: 700;
+			//     padding: 0.5rem;
+			//   }
+			// }
+		}
+	}
+
+	// ContactForm
+	&__contact-form {
+		label {
+			font-size: 14px;
+			font-weight: 700;
+			color: #777;
+			margin-bottom: 5px;
+		}
+
+		.error {
+			transition: $mainTransition;
+			width: 100%;
+			margin-top: 0.25rem;
+			font-size: 80%;
+			color: #dc3545;
+		}
+
+		button {
+			transition: $mainTransition;
+			border-color: $bsGray;
+			border-radius: 0;
+			font-size: 14px;
+			float: right;
+			clear: both;
+
+			&:focus,
+			&:hover {
+				border-color: $bsGray;
+				box-shadow: $mainBoxShadow;
+			}
+		}
+
+		input,
+		textarea {
+			transition: $mainTransition;
+			border-radius: 0;
+
+			&:focus {
+				border-color: $main-bg-color;
+				box-shadow: $mainBoxShadow;
+			}
+		}
+	}
+}
+
+// Misc
+.hidden {
+	display: none !important;
+}
+
+@media (min-width: 800px) {
+	.right-container > div:first-child .lines-title > hr:first-child {
+		display: none;
+	}
+}
+
+@media (max-width: 800px) {
+	.main {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	.react-reveal {
+		opacity: 1 !important;
+	}
+}
+
+.lines-title > h4 {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header-duration {
+	font-size: 14px;
+}
+
+.no-bottom-margin {
+	margin-bottom: 0;
+}
+
+.print-button {
+	cursor: pointer;
+
+	svg {
+		transition: $mainTransition;
+		color: $bsGray;
+	}
+
+	&:hover {
+		svg {
+			color: #000;
+		}
+	}
+}
+
+.sber_logo {
+	margin-right: 5px;
+}

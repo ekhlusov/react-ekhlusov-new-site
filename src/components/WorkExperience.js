@@ -1,6 +1,7 @@
 import React from "react";
 import WorkPeriod from "./WorkPeriod";
 import parse from "html-react-parser";
+import SberLogo from "../assets/images/sber_logo.svg";
 
 import { DataContext } from "./helpers/data-context";
 import { TitleWithLines } from "./helpers/helpers";
@@ -24,11 +25,20 @@ const WorkExperience = () => {
               />
 
               <p className="right-container__work-experience--info-block--item-cn">
+                {item?.company_name === "СБЕР" ? (
+                  <img
+                    src={SberLogo}
+                    alt={item?.company_name}
+                    className="sber_logo"
+                  />
+                ) : (
+                  ""
+                )}
                 {item?.company_name}
               </p>
 
               <p className="right-container__work-experience--info-block--item-city">
-                {item?.location.city}
+                {item?.location}
               </p>
 
               <p className="right-container__work-experience--info-block--item-pos">
@@ -37,11 +47,11 @@ const WorkExperience = () => {
 
               <div className="right-container__work-experience--info-block--item-desc">
                 {parse(item?.description, {
-                  replace: function(domNode) {
+                  replace: function (domNode) {
                     if (domNode?.data === "\n") {
                       return <br />;
                     }
-                  }
+                  },
                 })}
               </div>
             </div>

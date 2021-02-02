@@ -7,35 +7,35 @@ import me from "../assets/images/me.jpg";
 import { declarationOfNumbers } from "./helpers/helpers";
 
 const Sidebar = () => {
-  const data = React.useContext(DataContext);
-  const { info = {} } = data;
-  const age = parseInt(info?.age);
+	const data = React.useContext(DataContext);
+	const { info = {} } = data;
+	const age = parseInt(info?.age);
 
-  return (
-    <div className="sidebar">
-      <div className="sidebar__photo">
-        <SmoothImage src={me} alt={data?.fullName} transitionTime={0.5} />
-      </div>
+	return (
+		<div className="sidebar">
+			<div className="sidebar__photo">
+				<SmoothImage src={me} alt={data?.fullName} transitionTime={0.5} />
+			</div>
 
-      <hr />
+			<hr />
 
-      <div className="sidebar__info">
-        <h1>{info?.fullName}</h1>
-        <h2>{info?.headline}</h2>
-        <p>
-          {info?.city}, {age}{" "}
-          {declarationOfNumbers(age, ["год", "года", "лет"])}
-        </p>
-        {info?.about && (
-          <div className="sidebar__info--about">{parse(info?.about)}</div>
-        )}
-      </div>
+			<div className="sidebar__info">
+				<h1>{info?.fullName}</h1>
+				<h2>{info?.headline}</h2>
+				<p>
+					{info?.city}, {age}{" "}
+					{declarationOfNumbers(age, ["год", "года", "лет"])}
+				</p>
+				{info?.about && (
+					<div className="sidebar__info--about">{parse(info?.about)}</div>
+				)}
+			</div>
 
-      <hr />
+			<hr />
 
-      <HeaderSocialBlock />
-    </div>
-  );
+			<HeaderSocialBlock />
+		</div>
+	);
 };
 
 export default Sidebar;
