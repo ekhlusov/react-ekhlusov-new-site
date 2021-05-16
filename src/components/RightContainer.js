@@ -5,7 +5,7 @@ import Skills from "./Skills";
 import Education from "./Education";
 
 import Fade from "react-reveal/Fade";
-import Achievements from "./Achievments";
+import Courses from "./Courses";
 
 const RightContainer = () => {
 	return (
@@ -13,7 +13,7 @@ const RightContainer = () => {
 			<Fade>
 				<Skills />
 				<WorkExperience />
-				<Achievements />
+				<Courses />
 			</Fade>
 			<Education />
 		</>

@@ -2,11 +2,11 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
 import {
-	faTelegramPlane,
-	faVk,
-	faFacebookF,
+	faGithub,
 	faInstagram,
 	faLinkedinIn,
+	faTelegramPlane,
+	faVk,
 } from "@fortawesome/free-brands-svg-icons";
 import mkLogo from "../assets/images/moi_krug_logo.png";
 
@@ -25,9 +25,9 @@ const HeaderSocialBlock = () => {
 		},
 		{ link: "https://vk.com/ekhlusov", title: "VK", icon: faVk },
 		{
-			link: "https://facebook.com/ekhlusov",
-			title: "Facebook",
-			icon: faFacebookF,
+			link: "https://github.com/ekhlusov/",
+			title: "Github",
+			icon: faGithub,
 		},
 		{
 			link: "https://www.instagram.com/ekhlusov/",
@@ -52,13 +52,13 @@ const HeaderSocialBlock = () => {
 			<div className="sidebar__social">
 				{/* TODO: поменять класс */}
 				<a
-					href="https://moikrug.ru/ekhlusov"
+					href="https://career.habr.com/ekhlusov"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
 					<img
 						src={mkLogo}
-						alt="Мой круг"
+						alt="Хабр Карьера"
 						className="sidebar__social--mkLogo"
 					/>
 				</a>

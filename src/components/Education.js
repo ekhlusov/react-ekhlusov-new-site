@@ -1,51 +1,38 @@
 import React from "react";
 import WorkPeriod from "./WorkPeriod";
 import { TitleWithLines } from "./helpers/helpers";
+import { DataContext } from "./helpers/data-context";
 
-const Education = (props) => {
-  const data = {
-    university_educations: [
-      {
-        start_date: "2010-09-01",
-        end_date: "2015-07-01",
-        university_name: "Белгородский государственный университет",
-        faculty_name: "Педагогический",
-        location: {
-          city: "Белгород",
-          country: "Россия",
-        },
-        description: "Учитель английского",
-      },
-    ],
-  };
+const Education = props => {
+	const data = React.useContext(DataContext);
 
-  return (
-    <>
-      <div className="right-container__education">
-        <TitleWithLines text="Образование" />
+	return (
+		<>
+			<div className="right-container__education">
+				<TitleWithLines text="Образование" />
 
-        {data?.university_educations &&
-          data?.university_educations.map((item, index) => (
-            <div key={index} className="right-container__education--info-block">
-              <div className="right-container__education--info-block--item">
-                <WorkPeriod
-                  period={{ from: item.start_date, to: item.end_date }}
-                  show={false}
-                />
+				{data?.education &&
+					data?.education.map((item, index) => (
+						<div key={index} className="right-container__education--info-block">
+							<div className="right-container__education--info-block--item">
+								<WorkPeriod
+									period={{ from: item?.startDate, to: item?.endDate }}
+									show={false}
+								/>
 
-                <p className="right-container__education--info-block--item-un">
-                  {item.university_name}
-                </p>
+								<p className="right-container__education--info-block--item-un">
+									{item?.name}
+								</p>
 
-                <p className="right-container__education--info-block--item-faculty">
-                  {item.faculty_name} - {item.description}
-                </p>
-              </div>
-            </div>
-          ))}
-      </div>
-    </>
-  );
+								<p className="right-container__education--info-block--item-faculty">
+									{item?.faculty} - {item?.description}
+								</p>
+							</div>
+						</div>
+					))}
+			</div>
+		</>
+	);
 };
 
 export default Education;

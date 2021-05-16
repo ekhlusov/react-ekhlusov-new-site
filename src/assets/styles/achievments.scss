@@ -11,4 +11,29 @@
 			}
 		}
 	}
+
+	.course_item {
+		margin-bottom: 15px;
+
+		&--year {
+			font-size: 13px;
+			color: #888;
+			font-weight: 500;
+		}
+
+		&--url {
+			a {
+				font-size: 13px;
+				color: #888;
+				font-weight: 500;
+				text-decoration: none;
+				transition: 200ms ease-in;
+
+				&:hover {
+					color: #000;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 }

@@ -8,8 +8,7 @@ import { declarationOfNumbers } from "./helpers/helpers";
 
 const Sidebar = () => {
 	const data = React.useContext(DataContext);
-	const { info = {} } = data;
-	const age = parseInt(info?.age);
+	const age = parseInt(data?.age);
 
 	return (
 		<div className="sidebar">
@@ -20,14 +19,14 @@ const Sidebar = () => {
 			<hr />
 
 			<div className="sidebar__info">
-				<h1>{info?.fullName}</h1>
-				<h2>{info?.headline}</h2>
+				<h1>{data?.fullName}</h1>
+				<h2>{data?.cvHeadline}</h2>
 				<p>
-					{info?.city}, {age}{" "}
+					{data?.location?.city}, {age}{" "}
 					{declarationOfNumbers(age, ["год", "года", "лет"])}
 				</p>
-				{info?.about && (
-					<div className="sidebar__info--about">{parse(info?.about)}</div>
+				{data?.about && (
+					<div className="sidebar__info--about">{parse(data?.about)}</div>
 				)}
 			</div>
 

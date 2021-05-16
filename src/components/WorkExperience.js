@@ -7,59 +7,66 @@ import { DataContext } from "./helpers/data-context";
 import { TitleWithLines } from "./helpers/helpers";
 
 const WorkExperience = () => {
-  const data = React.useContext(DataContext);
+	const data = React.useContext(DataContext);
 
-  return (
-    <>
-      <div className="right-container__work-experience">
-        <TitleWithLines text="Опыт работы" exp={data?.experience_total} />
+	const replaceNewLineHTML = html => {
+		const regex = /\\n/gi;
+		return parse(html.replaceAll(regex, "<br />"));
+	};
 
-        {data?.experiences?.map((item, index) => (
-          <div
-            key={index}
-            className="right-container__work-experience--info-block"
-          >
-            <div className="right-container__work-experience--info-block--item">
-              <WorkPeriod
-                period={{ from: item?.start_date, to: item?.end_date }}
-              />
+	return (
+		<>
+			<div className="right-container__work-experience">
+				<TitleWithLines text="Опыт работы" exp={data?.experience_total} />
 
-              <p className="right-container__work-experience--info-block--item-cn">
-                {item?.company_name === "СБЕР" ? (
-                  <img
-                    src={SberLogo}
-                    alt={item?.company_name}
-                    className="sber_logo"
-                  />
-                ) : (
-                  ""
-                )}
-                {item?.company_name}
-              </p>
+				{data?.experiences?.map((item, index) => {
+					console.log(item);
+					return (
+						<div
+							key={index}
+							className="right-container__work-experience--info-block"
+						>
+							<div className="right-container__work-experience--info-block--item">
+								<WorkPeriod
+									period={{ from: item?.startDate, to: item?.endDate }}
+								/>
 
-              <p className="right-container__work-experience--info-block--item-city">
-                {item?.location}
-              </p>
+								<p className="right-container__work-experience--info-block--item-cn">
+									{item?.companyName === "СБЕР" && (
+										<img
+											src={SberLogo}
+											alt={item?.companyName}
+											className="sber_logo"
+										/>
+									)}
+									{item?.companyName}
+								</p>
 
-              <p className="right-container__work-experience--info-block--item-pos">
-                {item?.position}
-              </p>
+								<p className="right-container__work-experience--info-block--item-city">
+									{item?.location}
+								</p>
 
-              <div className="right-container__work-experience--info-block--item-desc">
-                {parse(item?.description, {
-                  replace: function (domNode) {
-                    if (domNode?.data === "\n") {
-                      return <br />;
-                    }
-                  },
-                })}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+								<p className="right-container__work-experience--info-block--item-pos">
+									{item?.position}
+								</p>
+
+								<div className="right-container__work-experience--info-block--item-desc">
+									{replaceNewLineHTML(item?.description)}
+								</div>
+
+								<div
+									className="right-container__skills--block"
+									style={{ marginBottom: 0 }}
+								>
+									{item?.skills?.join(" • ")}
+								</div>
+							</div>
+						</div>
+					);
+				})}
+			</div>
+		</>
+	);
 };
 
 export default WorkExperience;
