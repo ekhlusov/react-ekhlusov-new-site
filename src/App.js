@@ -8,7 +8,7 @@ import StickyBox from "react-sticky-box";
 import { ClipLoader } from "react-spinners";
 
 const App = () => {
-	const GET_USER_URL = "http://localhost:8081/api/v1/main";
+	const GET_USER_URL = `${process.env.REACT_APP_BACKEND_URL}/api/v1/main`;
 
 	const [data, loading] = useFetch(GET_USER_URL);
 
