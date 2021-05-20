@@ -52,6 +52,9 @@ code {
 		border: 1px solid $bsGray;
 		box-shadow: $mainBoxShadow;
 
+		border-radius: 3px;
+		overflow: hidden;
+
 		filter: grayscale(1) brightness(120%) contrast(85%);
 
 		&:hover {
@@ -99,6 +102,8 @@ code {
 			width: 2.8rem;
 			background-color: #fff;
 
+			border-radius: 3px;
+
 			svg {
 				color: $mkBlack;
 				font-size: 1.3rem;
@@ -129,7 +134,7 @@ code {
 	// Work experience
 	&__work-experience {
 		&--info-block {
-			margin-bottom: 2.5rem;
+			margin-bottom: 25px;
 			position: relative;
 
 			&--item {
@@ -144,6 +149,7 @@ code {
 					top: -5px;
 					bottom: -15px;
 					transition: 300ms ease-in-out;
+					border-radius: 3px;
 				}
 
 				&:hover {
