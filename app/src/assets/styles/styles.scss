@@ -130,8 +130,30 @@ code {
 	&__work-experience {
 		&--info-block {
 			margin-bottom: 2.5rem;
+			position: relative;
 
 			&--item {
+				&:after {
+					content: "";
+					border: 1px solid #efefef;
+					position: absolute;
+					left: -5px;
+					right: 0;
+					width: 101%;
+					height: 105%;
+					top: -5px;
+					bottom: -15px;
+					transition: 300ms ease-in-out;
+				}
+
+				&:hover {
+					&:after {
+						border-color: #d6d6d6;
+					}
+				}
+
+				// border: 1px solid #efefef;
+
 				&-period {
 					font-size: 13px;
 					color: #888;
