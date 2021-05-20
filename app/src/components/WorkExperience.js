@@ -54,12 +54,16 @@ const WorkExperience = () => {
 									{replaceNewLineHTML(item?.description)}
 								</div>
 
-								<div
-									className="right-container__skills--block"
-									style={{ marginBottom: 0 }}
-								>
-									{item?.skills?.join(" • ")}
-								</div>
+								{item?.technologies && (
+									<div
+										className="right-container__work-experience--info-block--item-tech"
+										style={{ marginBottom: 0 }}
+									>
+										<strong>Технологии:</strong>
+										<br />
+										{item?.technologies?.join(" • ")}
+									</div>
+								)}
 							</div>
 						</div>
 					);
