@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  frontend:
+    container_name: ekhlusov-frontend
+    build:
+      context: .
+      dockerfile: ./containers/node-nginx/Dockerfile
+    ports:
+      - '10035:80'
