@@ -54,7 +54,7 @@ const WorkExperience = () => {
 									{replaceNewLineHTML(item?.description)}
 								</div>
 
-								{item?.technologies && (
+								{item?.technologies?.length > 0 && (
 									<div
 										className="right-container__work-experience--info-block--item-tech"
 										style={{ marginBottom: 0 }}
