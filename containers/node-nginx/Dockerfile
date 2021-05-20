@@ -2,11 +2,11 @@
 FROM node:16.2.0-alpine as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY ./../../app/package.json ./
-COPY ./../../app/yarn.lock ./
+COPY ../../app/package.json ./
+COPY ../../app/yarn.lock ./
 # RUN npm install react-scripts@4.0.3 -g --silent
-RUN yarn install --frozen-lockfile
-COPY ./../../app ./
+RUN rm -rf node_modules && yarn install --frozen-lockfile
+COPY ../../app ./
 RUN yarn run build
 
 # production environment
