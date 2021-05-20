@@ -8,7 +8,7 @@ COPY ./app/yarn.lock ./
 RUN rm -rf node_modules && yarn install --frozen-lockfile
 COPY ./app ./
 RUN yarn run build
-RUN rf -rf node_modules
+RUN rm -rf node_modules
 
 # production environment
 FROM nginx:stable-alpine
