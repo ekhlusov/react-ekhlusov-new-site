@@ -137,6 +137,10 @@ code {
 			margin-bottom: 25px;
 			position: relative;
 
+			&:last-child {
+				margin-top: 35px;
+			}
+
 			&--item {
 				&:after {
 					content: "";
@@ -150,6 +154,7 @@ code {
 					bottom: -15px;
 					transition: 300ms ease-in-out;
 					border-radius: 3px;
+					z-index: -1;
 				}
 
 				&:hover {
