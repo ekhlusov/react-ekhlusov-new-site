@@ -20,7 +20,7 @@ const useFetch = url => {
 
 		console.log(json);
 
-		setData(json);
+		setData(json?.data);
 		setLoading(false);
 	}
 
