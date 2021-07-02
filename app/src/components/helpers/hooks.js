@@ -18,8 +18,6 @@ const useFetch = url => {
 		});
 		const json = await response.json();
 
-		console.log(json);
-
 		setData(json?.data);
 		setLoading(false);
 	}
