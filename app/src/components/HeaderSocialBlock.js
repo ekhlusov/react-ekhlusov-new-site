@@ -1,13 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
-import {
-	faGithub,
-	faInstagram,
-	faLinkedinIn,
-	faTelegramPlane,
-	faVk,
-} from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedinIn, faTelegramPlane, faVk } from "@fortawesome/free-brands-svg-icons";
 import mkLogo from "../assets/images/moi_krug_logo.png";
 
 import copy from "copy-to-clipboard";
@@ -28,11 +22,6 @@ const HeaderSocialBlock = () => {
 			link: "https://github.com/ekhlusov/",
 			title: "Github",
 			icon: faGithub,
-		},
-		{
-			link: "https://www.instagram.com/ekhlusov/",
-			title: "Instagram",
-			icon: faInstagram,
 		},
 		{
 			link: "https://www.linkedin.com/ekhlusov",
