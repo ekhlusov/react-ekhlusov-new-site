@@ -51,7 +51,7 @@ Vite's esbuild only parses JSX in `.jsx` files. Any component file containing JS
 
 The live API returns camelCase (`fullName`, `cvHeadline`, `experiences[]` with `startDate`/`endDate`/`companyName`/`location`/`position`/`technologies[]`, `education[]`, `courses[]`, `skills[]`, plus `experience_total` in months). Descriptions arrive as HTML with literal `\n` sequences and are rendered with `html-react-parser` after newline→`<br />` replacement.
 
-`src/mocks/cv.json` matches this shape and is the offline fallback. `src/assets/ekhlusov.json` is a legacy snake_case export (Habr Career / «Мой круг») that nothing imports — the mock was derived from it, but do not treat it as the current contract.
+`src/mocks/cv.json` matches this shape and is the offline fallback; it was transcribed from the owner's Habr Career profile (`career.habr.com/ekhlusov`, private — needs his login), which is the place to refresh it from. `src/assets/ekhlusov.json` is a stale 2019 snake_case export that nothing imports — do not treat it as the current contract.
 
 ## Styling
 

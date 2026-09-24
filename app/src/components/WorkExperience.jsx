@@ -35,7 +35,7 @@ const WorkExperience = () => {
 								/>
 
 								<p className="right-container__work-experience--info-block--item-cn">
-									{item?.companyName === "СБЕР" && (
+									{item?.companyName?.toUpperCase() === "СБЕР" && (
 										<img
 											src={SberLogo}
 											alt={item?.companyName}
