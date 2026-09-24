@@ -1,10 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import "./moment-ru";
-
 import "./index.scss";
-import "bootstrap/dist/css/bootstrap.css";
+import "./assets/styles/bootstrap.scss";
 
 import App from "./App";
 

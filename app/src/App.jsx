@@ -19,27 +19,25 @@ const App = () => {
 	}
 
 	return (
-		<>
-			<Container className="main">
-				<DataContext.Provider value={data}>
-					<Row>
-						<Col md="4">
-							<StickyBox
-								offsetTop={10}
-								offsetBottom={10}
-								className="sticky-block"
-							>
-								<Sidebar />
-							</StickyBox>
-						</Col>
+		<Container className="main">
+			<DataContext.Provider value={data}>
+				<Row>
+					<Col md="4">
+						<StickyBox
+							offsetTop={10}
+							offsetBottom={10}
+							className="sticky-block"
+						>
+							<Sidebar />
+						</StickyBox>
+					</Col>
 
-						<Col className="right-container">
-							<RightContainer />
-						</Col>
-					</Row>
-				</DataContext.Provider>
-			</Container>
-		</>
+					<Col className="right-container">
+						<RightContainer />
+					</Col>
+				</Row>
+			</DataContext.Provider>
+		</Container>
 	);
 };
 

@@ -37,7 +37,6 @@ code {
 
 .main {
 	background: #fff;
-	//border: $gray-border;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 	padding: 1rem;
@@ -46,7 +45,6 @@ code {
 
 // Sidebar
 .sidebar {
-	//width: 100%;
 	&__photo {
 		transition: ease-in 0.2s;
 		border: 1px solid $bsGray;
@@ -70,7 +68,6 @@ code {
 	&__info {
 		h1 {
 			font-weight: 700 !important;
-			// margin-top: 2rem !important;
 			font-size: 2rem;
 		}
 
@@ -80,7 +77,6 @@ code {
 
 		&--about {
 			font-size: 0.9rem;
-			// text-align: justify;
 		}
 	}
 
@@ -163,8 +159,6 @@ code {
 					}
 				}
 
-				// border: 1px solid #efefef;
-
 				&-period {
 					font-size: 13px;
 					color: #888;
@@ -172,7 +166,6 @@ code {
 					font-weight: 500;
 
 					&:first-letter {
-						//text-transform: uppercase;
 					}
 				}
 
@@ -242,7 +235,6 @@ code {
 					font-weight: 300;
 
 					&:first-letter {
-						//text-transform: uppercase;
 					}
 				}
 
@@ -285,62 +277,6 @@ code {
 				font-weight: 900;
 			}
 
-			// &--item {
-			//   margin: 0 5px 5px;
-			//   cursor: default;
-			//   span {
-			//     display: inline-block;
-			//     background-color: #fff;
-			//     border: $gray-border;
-			//     font-size: 12px;
-			//     font-weight: 700;
-			//     padding: 0.5rem;
-			//   }
-			// }
-		}
-	}
-
-	// ContactForm
-	&__contact-form {
-		label {
-			font-size: 14px;
-			font-weight: 700;
-			color: #777;
-			margin-bottom: 5px;
-		}
-
-		.error {
-			transition: $mainTransition;
-			width: 100%;
-			margin-top: 0.25rem;
-			font-size: 80%;
-			color: #dc3545;
-		}
-
-		button {
-			transition: $mainTransition;
-			border-color: $bsGray;
-			border-radius: 0;
-			font-size: 14px;
-			float: right;
-			clear: both;
-
-			&:focus,
-			&:hover {
-				border-color: $bsGray;
-				box-shadow: $mainBoxShadow;
-			}
-		}
-
-		input,
-		textarea {
-			transition: $mainTransition;
-			border-radius: 0;
-
-			&:focus {
-				border-color: $main-bg-color;
-				box-shadow: $mainBoxShadow;
-			}
 		}
 	}
 }

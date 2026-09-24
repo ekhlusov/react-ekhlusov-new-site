@@ -19,60 +19,58 @@ const WorkExperience = () => {
 	};
 
 	return (
-		<>
-			<div className="right-container__work-experience">
-				<TitleWithLines text="Опыт работы" exp={data?.experience_total} />
+		<div className="right-container__work-experience">
+			<TitleWithLines text="Опыт работы" exp={data?.experience_total} />
 
-				{data?.experiences?.map((item, index) => {
-					return (
-						<div
-							key={index}
-							className="right-container__work-experience--info-block"
-						>
-							<div className="right-container__work-experience--info-block--item">
-								<WorkPeriod
-									period={{ from: item?.startDate, to: item?.endDate }}
-								/>
+			{data?.experiences?.map((item, index) => {
+				return (
+					<div
+						key={index}
+						className="right-container__work-experience--info-block"
+					>
+						<div className="right-container__work-experience--info-block--item">
+							<WorkPeriod
+								period={{ from: item?.startDate, to: item?.endDate }}
+							/>
 
-								<p className="right-container__work-experience--info-block--item-cn">
-									{item?.companyName?.toUpperCase() === "СБЕР" && (
-										<img
-											src={SberLogo}
-											alt={item?.companyName}
-											className="sber_logo"
-										/>
-									)}
-									{item?.companyName}
-								</p>
-
-								<p className="right-container__work-experience--info-block--item-city">
-									{item?.location}
-								</p>
-
-								<p className="right-container__work-experience--info-block--item-pos">
-									{item?.position}
-								</p>
-
-								<div className="right-container__work-experience--info-block--item-desc">
-									{replaceNewLineHTML(item?.description)}
-								</div>
-
-								{item?.technologies?.length > 0 && (
-									<div
-										className="right-container__work-experience--info-block--item-tech"
-										style={{ marginBottom: 0 }}
-									>
-										<strong>Технологии:</strong>
-										<br />
-										{item?.technologies?.join(" • ")}
-									</div>
+							<p className="right-container__work-experience--info-block--item-cn">
+								{item?.companyName?.toUpperCase() === "СБЕР" && (
+									<img
+										src={SberLogo}
+										alt={item?.companyName}
+										className="sber_logo"
+									/>
 								)}
+								{item?.companyName}
+							</p>
+
+							<p className="right-container__work-experience--info-block--item-city">
+								{item?.location}
+							</p>
+
+							<p className="right-container__work-experience--info-block--item-pos">
+								{item?.position}
+							</p>
+
+							<div className="right-container__work-experience--info-block--item-desc">
+								{replaceNewLineHTML(item?.description)}
 							</div>
+
+							{item?.technologies?.length > 0 && (
+								<div
+									className="right-container__work-experience--info-block--item-tech"
+									style={{ marginBottom: 0 }}
+								>
+									<strong>Технологии:</strong>
+									<br />
+									{item?.technologies?.join(" • ")}
+								</div>
+							)}
 						</div>
-					);
-				})}
-			</div>
-		</>
+					</div>
+				);
+			})}
+		</div>
 	);
 };
 

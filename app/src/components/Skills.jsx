@@ -1,5 +1,4 @@
 import React from "react";
-//import { DataContext } from "./helpers/data-context";
 import { TitleWithLines } from "./helpers/helpers";
 import { DataContext } from "./helpers/data-context";
 
