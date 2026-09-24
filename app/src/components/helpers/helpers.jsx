@@ -38,10 +38,18 @@ export const normalizedDuration = totalMonths => {
 	return parts.length ? parts.join(" и ") : "меньше месяца";
 };
 
-// Нормальное отображение опыта по каждому работадателю
-export const normalizedCompanyDuration = ({ from, to }) => {
+// Календарная разница в месяцах между двумя датами (to не задан — по сегодня)
+export const monthsBetween = ({ from, to }) => {
+	if (!from) {
+		return 0;
+	}
+
 	const start = new Date(from);
 	const end = to ? new Date(to) : new Date();
+
+	if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+		return 0;
+	}
 
 	let months =
 		(end.getFullYear() - start.getFullYear()) * 12 +
@@ -51,8 +59,21 @@ export const normalizedCompanyDuration = ({ from, to }) => {
 		months -= 1;
 	}
 
-	return normalizedDuration(Math.max(months, 0));
+	return Math.max(months, 0);
 };
+
+// Суммарный стаж по всем местам работы — считаем сами, чтобы число
+// не устаревало (раньше его присылал бэкенд полем experience_total)
+export const totalExperienceMonths = (experiences = []) =>
+	(experiences || []).reduce(
+		(sum, item) =>
+			sum + monthsBetween({ from: item?.startDate, to: item?.endDate }),
+		0
+	);
+
+// Нормальное отображение опыта по каждому работадателю
+export const normalizedCompanyDuration = period =>
+	normalizedDuration(monthsBetween(period));
 
 // Заголовок с линиями
 export const TitleWithLines = props => {

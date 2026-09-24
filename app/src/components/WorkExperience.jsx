@@ -4,7 +4,7 @@ import parse from "html-react-parser";
 import SberLogo from "../assets/images/sber_logo.svg";
 
 import { DataContext } from "./helpers/data-context";
-import { TitleWithLines } from "./helpers/helpers";
+import { TitleWithLines, totalExperienceMonths } from "./helpers/helpers";
 
 const WorkExperience = () => {
 	const data = React.useContext(DataContext);
@@ -20,7 +20,10 @@ const WorkExperience = () => {
 
 	return (
 		<div className="right-container__work-experience">
-			<TitleWithLines text="Опыт работы" exp={data?.experience_total} />
+			<TitleWithLines
+				text="Опыт работы"
+				exp={totalExperienceMonths(data?.experiences) || data?.experience_total}
+			/>
 
 			{data?.experiences?.map((item, index) => {
 				return (
