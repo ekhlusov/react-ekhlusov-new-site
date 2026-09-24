@@ -8,14 +8,12 @@ import StickyBox from "react-sticky-box";
 import { ClipLoader } from "react-spinners";
 
 const App = () => {
-	const GET_USER_URL = `${process.env.REACT_APP_BACKEND_URL}/api/v1/main`;
-
-	const [data, loading] = useFetch(GET_USER_URL);
+	const [data, loading] = useFetch();
 
 	if (loading) {
 		return (
 			<div className="loading-bar">
-				<ClipLoader sizeUnit="px" size={50} color="#4e4e4e" />
+				<ClipLoader size={50} color="#4e4e4e" />
 			</div>
 		);
 	}

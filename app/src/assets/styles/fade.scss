@@ -1,0 +1,19 @@
+// Плавное появление блоков (замена react-reveal)
+.fade-block {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.9s ease, transform 0.9s ease;
+
+	&--visible {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fade-block {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}

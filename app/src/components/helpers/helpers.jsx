@@ -1,7 +1,6 @@
 import React from "react";
-import moment from "moment";
+import moment from "../../moment-ru";
 import humanizeDuration from "humanize-duration";
-import "moment/locale/ru";
 import PrintButton from "../PrintButton";
 // Нормальное отображение общего опыта
 export const normalizedDuration = (months) => {

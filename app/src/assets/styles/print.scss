@@ -1,5 +1,10 @@
 // Print
 @media print {
+	.fade-block {
+		opacity: 1 !important;
+		transform: none !important;
+	}
+
 	body {
 		padding: 0;
 		margin: 0;

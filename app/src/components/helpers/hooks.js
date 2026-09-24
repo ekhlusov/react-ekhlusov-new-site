@@ -1,30 +1,79 @@
 import { useEffect, useState } from "react";
 
-const useFetch = url => {
-	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
+import mockData from "../../mocks/cv.json";
 
-	async function fetchUrl() {
-		const response = await fetch(url, {
-			method: "GET",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: new Headers({
-				Authorization: `Basic ${btoa(
-					`${process.env.REACT_APP_LOGIN}:${process.env.REACT_APP_PASSWORD}`
-				)}`,
-			}),
-		});
-		const json = await response.json();
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const LOGIN = import.meta.env.VITE_LOGIN;
+const PASSWORD = import.meta.env.VITE_PASSWORD;
 
-		setData(json?.data);
-		setLoading(false);
+const buildHeaders = () => {
+	if (!LOGIN || !PASSWORD) {
+		return undefined;
 	}
 
+	return new Headers({
+		Authorization: `Basic ${btoa(`${LOGIN}:${PASSWORD}`)}`,
+	});
+};
+
+const fetchCv = async () => {
+	const response = await fetch(`${BACKEND_URL}/api/v1/main`, {
+		method: "GET",
+		mode: "cors",
+		cache: "no-cache",
+		credentials: "same-origin",
+		headers: buildHeaders(),
+	});
+
+	if (!response.ok) {
+		throw new Error(`${response.status} ${response.statusText}`);
+	}
+
+	const json = await response.json();
+
+	return json?.data;
+};
+
+/*
+ * Данные резюме: с бэкенда, если он настроен и отвечает, иначе — локальный мок.
+ * Фоллбэк нужен, чтобы страница не висела вечно на спиннере без бэкенда.
+ */
+const useFetch = () => {
+	const [data, setData] = useState(null);
+	const [loading, setLoading] = useState(true);
+
 	useEffect(() => {
-		fetchUrl();
-		// eslint-disable-next-line
+		let cancelled = false;
+
+		const load = async () => {
+			let result = mockData;
+
+			if (!BACKEND_URL) {
+				console.warn(
+					"VITE_BACKEND_URL не задан — показываем локальный мок src/mocks/cv.json"
+				);
+			} else {
+				try {
+					result = await fetchCv();
+				} catch (error) {
+					console.error(
+						`Не удалось получить резюме с ${BACKEND_URL} — показываем локальный мок:`,
+						error
+					);
+				}
+			}
+
+			if (!cancelled) {
+				setData(result);
+				setLoading(false);
+			}
+		};
+
+		load();
+
+		return () => {
+			cancelled = true;
+		};
 	}, []);
 
 	return [data, loading];

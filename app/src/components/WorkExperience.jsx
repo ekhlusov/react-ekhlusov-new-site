@@ -10,6 +10,10 @@ const WorkExperience = () => {
 	const data = React.useContext(DataContext);
 
 	const replaceNewLineHTML = html => {
+		if (!html) {
+			return null;
+		}
+
 		const regex = /\\n/gi;
 		return parse(html.replaceAll(regex, "<br />"));
 	};
@@ -20,7 +24,6 @@ const WorkExperience = () => {
 				<TitleWithLines text="Опыт работы" exp={data?.experience_total} />
 
 				{data?.experiences?.map((item, index) => {
-					console.log(item);
 					return (
 						<div
 							key={index}

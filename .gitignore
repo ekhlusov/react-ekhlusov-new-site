@@ -1,3 +1,6 @@
 .idea
 .npm
 .node
+# Установка живёт в app/ — в корне это мусор
+/node_modules
+/yarn.lock

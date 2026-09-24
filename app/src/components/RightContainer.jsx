@@ -4,7 +4,7 @@ import WorkExperience from "./WorkExperience";
 import Skills from "./Skills";
 import Education from "./Education";
 
-import Fade from "react-reveal/Fade";
+import Fade from "./helpers/Fade";
 import Courses from "./Courses";
 
 const RightContainer = () => {

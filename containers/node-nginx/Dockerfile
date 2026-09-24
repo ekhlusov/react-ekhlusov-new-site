@@ -1,19 +1,15 @@
 # build environment
-FROM node:16.2.0-alpine as build
+FROM node:22-alpine AS build
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
-COPY ./app/package.json ./
-COPY ./app/yarn.lock ./
-# RUN npm install react-scripts@4.0.3 -g --silent
-RUN rm -rf node_modules && yarn install --frozen-lockfile
+COPY ./app/package.json ./app/package-lock.json ./
+RUN npm ci
+# .env с VITE_* переменными нужен здесь: Vite подставляет их на этапе сборки
 COPY ./app ./
-RUN yarn run build
-RUN rm -rf node_modules
+RUN npm run build
 
 # production environment
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
-# new
 COPY ./containers/node-nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
