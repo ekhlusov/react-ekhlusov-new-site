@@ -62,14 +62,33 @@ export const monthsBetween = ({ from, to }) => {
 	return Math.max(months, 0);
 };
 
-// Суммарный стаж по всем местам работы — считаем сами, чтобы число
-// не устаревало (раньше его присылал бэкенд полем experience_total)
-export const totalExperienceMonths = (experiences = []) =>
-	(experiences || []).reduce(
-		(sum, item) =>
-			sum + monthsBetween({ from: item?.startDate, to: item?.endDate }),
-		0
-	);
+/*
+ * Суммарный стаж — считаем сами, чтобы число не устаревало (раньше его
+ * присылал бэкенд полем experience_total). Меряем сплошным отрезком от
+ * первого рабочего дня, как это делает hh: перерывы между работами
+ * из стажа не вычитаются.
+ */
+export const totalExperienceMonths = (experiences = []) => {
+	const periods = (experiences || []).filter(item => item?.startDate);
+
+	if (!periods.length) {
+		return 0;
+	}
+
+	const start = periods
+		.map(item => item.startDate)
+		.reduce((earliest, date) => (date < earliest ? date : earliest));
+
+	// если хоть одно место без даты окончания — работа продолжается
+	const stillWorking = periods.some(item => !item.endDate);
+	const end = stillWorking
+		? null
+		: periods
+				.map(item => item.endDate)
+				.reduce((latest, date) => (date > latest ? date : latest));
+
+	return monthsBetween({ from: start, to: end });
+};
 
 // Нормальное отображение опыта по каждому работадателю
 export const normalizedCompanyDuration = period =>
