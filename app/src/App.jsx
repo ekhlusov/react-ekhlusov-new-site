@@ -17,7 +17,7 @@ const App = () => {
 	return (
 		<DataContext.Provider value={data}>
 			<a className="skip-link" href="#content">
-				К опыту работы
+				Перейти к содержимому
 			</a>
 
 			<Profile />
