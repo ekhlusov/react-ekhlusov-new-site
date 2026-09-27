@@ -3,19 +3,14 @@ import Profile from "./components/Profile";
 import Contacts from "./components/Contacts";
 import SectionNav from "./components/SectionNav";
 import RightContainer from "./components/RightContainer";
-import Skeleton from "./components/Skeleton";
-import { useFetch } from "./components/helpers/hooks";
 import { DataContext } from "./components/helpers/data-context";
+// Резюме хранится прямо в репозитории — бэкенда и базы нет.
+// Чтобы поменять текст на сайте, правьте этот файл.
+import cv from "./data/cv.json";
 
 const App = () => {
-	const [data, loading] = useFetch();
-
-	if (loading) {
-		return <Skeleton />;
-	}
-
 	return (
-		<DataContext.Provider value={data}>
+		<DataContext.Provider value={cv}>
 			<a className="skip-link" href="#content">
 				Перейти к содержимому
 			</a>

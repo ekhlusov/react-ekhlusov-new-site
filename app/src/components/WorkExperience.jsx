@@ -9,19 +9,9 @@ import {
 	totalExperienceMonths,
 } from "./helpers/helpers";
 
-const replaceNewLineHTML = html => {
-	if (!html) {
-		return null;
-	}
-
-	const regex = /\\n/gi;
-	return parse(html.replaceAll(regex, "<br />"));
-};
-
 const WorkExperience = () => {
 	const data = React.useContext(DataContext);
-	const totalMonths =
-		totalExperienceMonths(data?.experiences) || data?.experience_total;
+	const totalMonths = totalExperienceMonths(data?.experiences);
 
 	return (
 		<section id="experience" className="section section--experience">
@@ -47,7 +37,7 @@ const WorkExperience = () => {
 						</div>
 
 						<div className="entry__desc">
-							{replaceNewLineHTML(item?.description)}
+							{item?.description && parse(item.description)}
 						</div>
 
 						{item?.technologies?.length > 0 && (
