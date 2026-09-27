@@ -3,19 +3,22 @@ import React from "react";
 import WorkExperience from "./WorkExperience";
 import Skills from "./Skills";
 import Education from "./Education";
+import Courses from "./Courses";
+import About from "./About";
 
 import Fade from "./helpers/Fade";
-import Courses from "./Courses";
 
+// Порядок секций — как в резюме на hh: сначала опыт, «Обо мне» в конце
 const RightContainer = () => {
 	return (
 		<>
+			<WorkExperience />
 			<Fade>
 				<Skills />
-				<WorkExperience />
+				<Education />
 				<Courses />
+				<About />
 			</Fade>
-			<Education />
 		</>
 	);
 };

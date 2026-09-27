@@ -1,79 +1,62 @@
 import React from "react";
 import WorkPeriod from "./WorkPeriod";
 import parse from "html-react-parser";
-import SberLogo from "../assets/images/sber_logo.svg";
 
 import { DataContext } from "./helpers/data-context";
-import { TitleWithLines, totalExperienceMonths } from "./helpers/helpers";
+import {
+	SectionTitle,
+	normalizedDuration,
+	totalExperienceMonths,
+} from "./helpers/helpers";
+
+const replaceNewLineHTML = html => {
+	if (!html) {
+		return null;
+	}
+
+	const regex = /\\n/gi;
+	return parse(html.replaceAll(regex, "<br />"));
+};
 
 const WorkExperience = () => {
 	const data = React.useContext(DataContext);
-
-	const replaceNewLineHTML = html => {
-		if (!html) {
-			return null;
-		}
-
-		const regex = /\\n/gi;
-		return parse(html.replaceAll(regex, "<br />"));
-	};
+	const totalMonths =
+		totalExperienceMonths(data?.experiences) || data?.experience_total;
 
 	return (
-		<div className="right-container__work-experience">
-			<TitleWithLines
+		<section className="section section--experience">
+			<SectionTitle
 				text="Опыт работы"
-				exp={totalExperienceMonths(data?.experiences) || data?.experience_total}
+				aside={totalMonths ? normalizedDuration(totalMonths) : null}
 			/>
 
-			{data?.experiences?.map((item, index) => {
-				return (
-					<div
-						key={index}
-						className="right-container__work-experience--info-block"
-					>
-						<div className="right-container__work-experience--info-block--item">
-							<WorkPeriod
-								period={{ from: item?.startDate, to: item?.endDate }}
-							/>
+			{data?.experiences?.map((item, index) => (
+				<article key={index} className="entry entry--job">
+					<WorkPeriod period={{ from: item?.startDate, to: item?.endDate }} />
 
-							<p className="right-container__work-experience--info-block--item-cn">
-								{item?.companyName?.toUpperCase() === "СБЕР" && (
-									<img
-										src={SberLogo}
-										alt={item?.companyName}
-										className="sber_logo"
-									/>
-								)}
-								{item?.companyName}
-							</p>
-
-							<p className="right-container__work-experience--info-block--item-city">
-								{item?.location}
-							</p>
-
-							<p className="right-container__work-experience--info-block--item-pos">
-								{item?.position}
-							</p>
-
-							<div className="right-container__work-experience--info-block--item-desc">
-								{replaceNewLineHTML(item?.description)}
-							</div>
-
-							{item?.technologies?.length > 0 && (
-								<div
-									className="right-container__work-experience--info-block--item-tech"
-									style={{ marginBottom: 0 }}
-								>
-									<strong>Технологии:</strong>
-									<br />
-									{item?.technologies?.join(" • ")}
-								</div>
+					<div className="entry__body">
+						<div className="entry__head">
+							<h3 className="entry__title">{item?.companyName}</h3>
+							{item?.location && (
+								<span className="entry__place">{item.location}</span>
 							)}
+							<p className="entry__position">{item?.position}</p>
 						</div>
+
+						<div className="entry__desc">
+							{replaceNewLineHTML(item?.description)}
+						</div>
+
+						{item?.technologies?.length > 0 && (
+							<p className="entry__tech">
+								<span className="entry__label">Технологии:</span>{" "}
+								<span translate="no">{item.technologies.join(", ")}</span>
+							</p>
+						)}
 					</div>
-				);
-			})}
-		</div>
+				</article>
+			))}
+		</section>
 	);
 };
 

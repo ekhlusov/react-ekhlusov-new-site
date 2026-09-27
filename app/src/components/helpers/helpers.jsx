@@ -1,5 +1,4 @@
 import React from "react";
-import PrintButton from "../PrintButton";
 
 const monthFormatter = new Intl.DateTimeFormat("ru-RU", { month: "long" });
 
@@ -94,21 +93,12 @@ export const totalExperienceMonths = (experiences = []) => {
 export const normalizedCompanyDuration = period =>
 	normalizedDuration(monthsBetween(period));
 
-// Заголовок с линиями
-export const TitleWithLines = props => {
-	return props.text ? (
-		<div className="lines-title">
-			<hr />
-			<h4>
-				{props.text}
-
-				{props.exp && (
-					<span className="header-duration">{normalizedDuration(props.exp)}</span>
-				)}
-
-				{props.printButton && <PrintButton />}
-			</h4>
-			<hr />
-		</div>
+// Заголовок секции; aside — приписка справа (например, общий стаж)
+export const SectionTitle = ({ text, aside = null }) =>
+	text ? (
+		<h2 className="section__title">
+			{text}
+			{aside && " "}
+			{aside && <span className="section__title-aside">{aside}</span>}
+		</h2>
 	) : null;
-};

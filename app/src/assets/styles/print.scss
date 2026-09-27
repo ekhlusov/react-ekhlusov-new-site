@@ -1,37 +1,202 @@
-// Print
+// Печать = «экспорт в PDF». На бумаге резюме — один лист в одну колонку:
+// шапка с фото и контактами, ниже секции. Всё чёрное, без интерактива.
+@page {
+	size: A4;
+	margin: 10mm 14mm 11mm;
+}
+
 @media print {
-	.fade-block {
-		opacity: 1 !important;
-		transform: none !important;
+	:root {
+		--color-ink: #000;
+		--color-ink-soft: #1f1f1f;
+		--color-muted: #4a4a4a;
+		--color-line: #cfcfcf;
+		--color-accent: #000;
 	}
 
-	body {
+	html,
+	body,
+	.cv {
+		background: #fff !important;
+	}
+
+	// Сетка Bootstrap -> одна колонка. Кегль задаём на .cv, а не на body:
+	// body перебивает reboot из bootstrap.scss, который подключён позже
+	.cv {
+		font-size: 9pt;
+		line-height: 1.33;
+		max-width: none;
+		margin: 0;
 		padding: 0;
+		border: 0;
+	}
+
+	.cv > .row {
+		display: block;
 		margin: 0;
 	}
 
-	.sidebar__social--print-block {
-		display: block !important;
-	}
-
-	.sidebar__social,
-	.print-button,
-	.tooltip-arrow,
-	.tooltip {
-		display: none !important;
+	.cv__aside,
+	.cv__content {
+		width: 100% !important;
+		max-width: 100% !important;
+		padding: 0 !important;
 	}
 
 	.sticky-block {
-		position: relative !important;
-		top: 10px !important;
-		display: block !important;
+		position: static !important;
+		top: auto !important;
 	}
 
-	.right-container hr {
-		margin: 2px !important;
+	// Шапка: фото слева, всё остальное справа
+	.profile {
+		display: grid;
+		grid-template-columns: 30mm minmax(0, 1fr);
+		gap: 6mm;
+		align-items: start;
+		margin-bottom: 5mm;
+		padding-bottom: 4mm;
+		border-bottom: 1px solid var(--color-line);
+		break-inside: avoid;
+
+		&__photo {
+			margin: 0;
+			border-radius: 2px;
+			filter: grayscale(1);
+		}
+
+		&__name {
+			font-size: 20pt;
+			margin-bottom: 1mm;
+		}
+
+		&__position {
+			font-size: 12pt;
+			margin-bottom: 2.5mm;
+		}
+
+		&__facts {
+			margin-bottom: 2.5mm;
+			font-size: 9.5pt;
+
+			li + li {
+				margin-top: 0;
+			}
+		}
 	}
 
-	h4 {
-		margin-bottom: 0 !important;
+	// Контакты — в строку, адреса целиком: на бумаге по ним не кликнешь
+	.contacts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6mm 5mm;
+		margin: 0;
+		padding: 2.5mm 0 0;
+		font-size: 9pt;
+
+		&__item + &__item {
+			margin-top: 0;
+		}
+	}
+
+	a {
+		color: inherit !important;
+		text-decoration: none !important;
+	}
+
+	.print-button,
+	.skip-link {
+		display: none !important;
+	}
+
+	.fade-block {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+		margin-top: 5mm;
+	}
+
+	.section {
+		& + & {
+			margin-top: 5mm;
+		}
+
+		&__title {
+			margin-bottom: 3mm;
+			padding-bottom: 1.2mm;
+			font-size: 12pt;
+			break-after: avoid;
+		}
+
+		&__title-aside {
+			font-size: 9.5pt;
+		}
+	}
+
+	.entry {
+		grid-template-columns: 31mm minmax(0, 1fr);
+		gap: 5mm;
+
+		& + & {
+			margin-top: 4mm;
+		}
+
+		&__period {
+			font-size: 8.5pt;
+		}
+
+		&__title {
+			font-size: 11pt;
+		}
+
+		&__place {
+			font-size: 9pt;
+		}
+
+		// Шапка места работы не должна отрываться от начала описания
+		&__head {
+			margin-bottom: 1.5mm;
+			break-inside: avoid;
+			break-after: avoid;
+		}
+
+		&__desc {
+			font-size: 9pt;
+
+			p {
+				margin-bottom: 0.3mm;
+				orphans: 2;
+				widows: 2;
+			}
+		}
+
+		&__tech {
+			margin-top: 2mm;
+			font-size: 8.5pt;
+			break-inside: avoid;
+		}
+	}
+
+	// Короткие записи (учёба, курсы) не рвём
+	.entry:not(.entry--job) {
+		break-inside: avoid;
+	}
+
+	.skills {
+		gap: 1mm;
+
+		&__item {
+			padding: 0 1.6mm;
+			font-size: 8.5pt;
+			background: none;
+		}
+	}
+
+	.about {
+		max-width: none;
+
+		p {
+			margin-bottom: 1mm;
+		}
 	}
 }

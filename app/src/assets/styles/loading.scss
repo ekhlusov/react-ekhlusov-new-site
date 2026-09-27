@@ -1,16 +1,51 @@
-$mainTransition: ease 0.5s;
-
-.loading-bar {
-	transition: $mainTransition;
-
-	span {
+// Скелетон на время загрузки резюме
+.skeleton {
+	&__photo,
+	&__line {
 		display: block;
-		transition: $mainTransition;
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		margin: auto;
+		border-radius: 4px;
+		background: var(--color-canvas);
+		animation: skeleton-pulse 1.4s var(--ease-out) infinite alternate;
+	}
+
+	&__photo {
+		aspect-ratio: 1;
+		margin-bottom: 1.5rem;
+	}
+
+	&__line {
+		height: 0.9rem;
+		margin-bottom: 0.75rem;
+	}
+
+	&__entry {
+		display: grid;
+		grid-template-columns: 9.5rem minmax(0, 1fr);
+		gap: 1.5rem;
+		margin-top: 2rem;
+	}
+}
+
+@keyframes skeleton-pulse {
+	to {
+		opacity: 0.45;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.skeleton__photo,
+	.skeleton__line {
+		animation: none;
+	}
+}
+
+@media screen and (max-width: 767.98px) {
+	.skeleton__photo {
+		width: 7rem;
+	}
+
+	.skeleton__entry {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0;
 	}
 }

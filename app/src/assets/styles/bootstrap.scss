@@ -1,6 +1,18 @@
-// Из всего Bootstrap реально используются только сетка (Container/Row/Col),
-// Tooltip из reactstrap и базовая типографика reboot. Полный bootstrap.css
-// тянул ~239 кБ ради этого, поэтому подключаем партиалы точечно.
+// Из всего Bootstrap реально используются только сетка (Container/Row/Col)
+// и базовая типографика reboot. Полный bootstrap.css тянул ~239 кБ ради
+// этого, поэтому подключаем партиалы точечно.
+//
+// Этот файл подключается после index.scss, и reboot перебил бы шрифт и цвета
+// у body и ссылок — поэтому они задаются здесь, переменными Bootstrap.
+// Значения совпадают с токенами в colors.scss.
+$font-family-base: "Onest", "Helvetica Neue", Arial, sans-serif;
+$font-size-base: 0.9375rem; // 15px
+$line-height-base: 1.55;
+$body-color: #1c1c1e;
+$body-bg: #f6f5f4;
+$link-color: #1c1c1e;
+$link-hover-color: #2d4a68;
+
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/variables-dark";
@@ -10,4 +22,3 @@
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/containers";
 @import "bootstrap/scss/grid";
-@import "bootstrap/scss/tooltip";

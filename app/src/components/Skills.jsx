@@ -1,20 +1,26 @@
 import React from "react";
-import { TitleWithLines } from "./helpers/helpers";
+import { SectionTitle } from "./helpers/helpers";
 import { DataContext } from "./helpers/data-context";
-
-// Думаю этот раздел не очень нужен
 
 const Skills = () => {
 	const data = React.useContext(DataContext);
 
-	return (
-		<div className="right-container__skills">
-			<TitleWithLines text="Профессиональные навыки" printButton={true} />
+	if (!data?.skills?.length) {
+		return null;
+	}
 
-			<div className="right-container__skills--block">
-				{data?.skills?.join(" • ")}
-			</div>
-		</div>
+	return (
+		<section className="section section--skills">
+			<SectionTitle text="Ключевые навыки" />
+
+			<ul className="skills" translate="no">
+				{data.skills.map(skill => (
+					<li key={skill} className="skills__item">
+						{skill}
+					</li>
+				))}
+			</ul>
+		</section>
 	);
 };
 

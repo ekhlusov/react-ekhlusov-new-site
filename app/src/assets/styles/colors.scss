@@ -1,4 +1,16 @@
+// Тёплый монохром + один сдержанный акцент. Нейтральные — по мотивам
+// .claude/design-md/notion (hairline, charcoal, surface), акцент свой.
 :root {
-	--color-black: #000;
-	--color-accent-gray: #777;
+	--color-ink: #1c1c1e;
+	--color-ink-soft: #37352f;
+	--color-muted: #6f6e6b;
+	--color-line: #e5e3df;
+	--color-paper: #ffffff;
+	--color-canvas: #f6f5f4;
+	--color-chip: #fafaf9;
+	--color-accent: #2d4a68;
+
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+	--font-base: "Onest", "Helvetica Neue", Arial, sans-serif;
 }

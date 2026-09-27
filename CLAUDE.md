@@ -35,17 +35,17 @@ Vite inlines `VITE_*` into the bundle at build time, so these credentials are pu
 
 A single-page Russian-language CV/resume. No router, no Redux, no local persistence — one fetch on mount feeds everything.
 
-- `src/main.jsx` — entry point: sets the moment locale, imports global styles, mounts `<App />` with `createRoot`, and unregisters the service worker left behind by old CRA builds (without that, returning visitors keep getting the cached 2021 bundle).
-- `src/App.jsx` calls `useFetch()`, shows a `ClipLoader` while loading, then puts the payload into `DataContext.Provider` and renders a two-column reactstrap layout: sticky `Sidebar` (left) + `RightContainer` (right).
+- `src/main.jsx` — entry point: imports global styles, mounts `<App />` with `createRoot`, and unregisters the service worker left behind by old CRA builds (without that, returning visitors keep getting the cached 2021 bundle).
+- `src/App.jsx` calls `useFetch()`, shows `Skeleton` (a page-shaped placeholder) while loading, then puts the payload into `DataContext.Provider` and renders a two-column reactstrap layout: sticky `Sidebar` (left, a `<header>`: photo, name, facts, `Contacts`, `PrintButton`) + `RightContainer` (right, `<main>`). Section order follows hh.ru: `WorkExperience`, `Skills`, `Education`, `Courses`, `About`.
 - `src/components/helpers/hooks.js` — `useFetch` is the only data-access point: GET `$VITE_BACKEND_URL/api/v1/main` with the Basic header, unwraps `json?.data`. **If the backend is not configured or the request fails it falls back to `src/mocks/cv.json`**, so the page never hangs on the spinner; the fallback is announced via `console.warn`/`console.error`.
-- `src/components/helpers/data-context.js` — a single `DataContext`. Every section component (`Sidebar`, `Skills`, `WorkExperience`, `Courses`, `Education`) reads it with `React.useContext(DataContext)` and guards each field with optional chaining; nothing is passed down as props. New sections should follow that pattern instead of threading props.
-- `src/components/helpers/helpers.jsx` — shared formatting: `normalizedDuration` / `normalizedCompanyDuration` (moment + humanize-duration), `declarationOfNumbers` (Russian plural forms), and `TitleWithLines`, the section-header component used by every section.
-- `src/components/helpers/Fade.jsx` — in-house IntersectionObserver fade-in that replaced `react-reveal` (abandoned, React 16 only). Paired with `assets/styles/fade.scss`; the `.fade-block` class is also neutralised in `print.scss` and under 800px in `styles.scss`.
-- `src/moment-ru.js` — the single place that configures moment's Russian locale. Import moment **from here**, not from `"moment"`: under Vite the side-effect import `"moment/locale/ru"` registers against a different moment instance and dates silently come out in English.
+- `src/components/helpers/data-context.js` — a single `DataContext`. Every section component (`Sidebar`, `WorkExperience`, `Skills`, `Education`, `Courses`, `About`) reads it with `React.useContext(DataContext)` and guards each field with optional chaining; nothing is passed down as props. New sections should follow that pattern instead of threading props.
+- `src/components/helpers/helpers.jsx` — shared formatting: `formatMonth` (`Intl.DateTimeFormat`), `normalizedDuration` / `normalizedCompanyDuration` / `totalExperienceMonths` (hand-rolled month math), `declarationOfNumbers` (Russian plural forms), and `SectionTitle`, the section header used by every section. Dated items (jobs, education, courses) share the `.entry` markup: a date column (`entry__period`, rendered by `WorkPeriod` for jobs) next to `entry__body`.
+- `src/components/helpers/Fade.jsx` — in-house IntersectionObserver fade-in that replaced `react-reveal` (abandoned, React 16 only). Paired with `assets/styles/fade.scss`; the `.fade-block` class is also neutralised in `print.scss` and on phones in `styles.scss`.
+- `Sidebar.jsx` hard-codes the hh-style facts the API does not carry (work format, relocation); `Contacts.jsx` hard-codes the contact links. The owner does not publish a phone number — do not add one.
 
 ### File extensions
 
-Vite's esbuild only parses JSX in `.jsx` files. Any component file containing JSX must be `.jsx`; plain modules (`hooks.js`, `data-context.js`, `Constants.js`, `moment-ru.js`) stay `.js`.
+Vite's esbuild only parses JSX in `.jsx` files. Any component file containing JSX must be `.jsx`; plain modules (`hooks.js`, `data-context.js`) stay `.js`.
 
 ### API payload
 
@@ -55,15 +55,17 @@ The live API returns camelCase (`fullName`, `cvHeadline`, `experiences[]` with `
 
 ## Styling
 
-Global SCSS only, compiled by dart-sass: `src/index.scss` imports `assets/styles/{colors,styles,loading,print,achievments,fade}.scss`. Bootstrap CSS is imported in `main.jsx` *after* `index.scss` (the CRA order, preserved deliberately — flipping it changes which rules win). Class names are hand-written BEM-ish (`right-container__work-experience--info-block--item-desc`); there are no CSS modules or styled-components.
+Global SCSS only, compiled by dart-sass: `src/index.scss` imports `assets/styles/{colors,styles,loading,print,fade}.scss`. Bootstrap (`bootstrap.scss`, grid + reboot only) is imported in `main.jsx` *after* `index.scss` (the CRA order, preserved deliberately — flipping it changes which rules win). Because reboot comes later it overrides plain `body`/`a` rules, so the base font and colors are set as Bootstrap Sass variables at the top of `bootstrap.scss`, and print font size is set on `.cv`, not `body`. Class names are short BEM (`profile__name`, `section__title`, `entry__period`, `skills__item`); there are no CSS modules or styled-components.
+
+Visual rules (tokens, type scale, what is banned) are in the root `DESIGN.md`; color tokens live in `colors.scss`.
 
 `sass` is pinned to `~1.77` on purpose: the stylesheets still use `@import`, which newer dart-sass floods with deprecation warnings. Migrating to `@use` means reworking how `styles.scss`'s variables reach the other partials.
 
-`print.scss` is the "export to PDF" mechanism: `PrintButton` calls `window.print`, and the print media query hides the social block, sticky wrapper, tooltips and print button.
+`print.scss` is the "export to PDF" mechanism: `PrintButton` calls `window.print`, and the print media query turns the page into a single-column A4 document (photo + contacts header, then sections) and hides the button and skip link. The current CV fits exactly two pages — re-check with a PDF after changing print spacing or content. Width media queries in `styles.scss` are `screen`-only on purpose: an A4 page is narrower than 992px and would otherwise pick up the tablet layout.
 
 ## UI language
 
-All user-facing strings, and most code comments, are in Russian. Keep new copy in Russian and localize dates/durations through `src/moment-ru.js` and the existing `humanize-duration` helpers.
+All user-facing strings, and most code comments, are in Russian. Keep new copy in Russian and format dates/durations through the helpers in `helpers.jsx`.
 
 ## Deployment
 
