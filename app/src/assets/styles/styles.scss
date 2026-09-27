@@ -11,6 +11,12 @@ html body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+// Фиксированная шапка не должна закрывать элемент, к которому перешли
+// табом или по якорю
+html {
+	scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+
 @media (prefers-reduced-motion: no-preference) {
 	html {
 		scroll-behavior: smooth;
@@ -28,7 +34,8 @@ button {
 	-webkit-tap-highlight-color: transparent;
 }
 
-.cv a {
+.cv a,
+.profile a {
 	color: var(--color-ink);
 	text-decoration: underline;
 	text-decoration-color: var(--color-line-strong);
@@ -67,11 +74,11 @@ button:focus-visible {
 	}
 }
 
-// Каркас: шапка во всю ширину, ниже оглавление + контент
+// Каркас: шапка фиксирована сверху, под ней оглавление + контент
 .cv {
 	max-width: 1080px;
 	margin: 0 auto;
-	padding: 0 2rem 6rem;
+	padding: calc(var(--header-expanded) + 3rem) 2rem 6rem;
 
 	&__body {
 		display: grid;
@@ -87,20 +94,62 @@ button:focus-visible {
 	}
 }
 
-// Шапка
+// «Датчик» у верха страницы: пока он виден, шапка большая
+.profile-sentinel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 3rem;
+	pointer-events: none;
+}
+
+// Шапка: большая вверху страницы, узкая полоса при прокрутке.
+// Переход анимирует размеры только внутри фиксированной шапки —
+// остальная страница при этом не перестраивается.
+$header-transition: 350ms var(--ease-out);
+
 .profile {
-	display: grid;
-	grid-template-columns: 6rem minmax(0, 1fr);
-	gap: 1.75rem;
-	align-items: start;
-	margin-bottom: 3.5rem;
-	padding: 4.5rem 0 3rem;
-	border-bottom: 1px solid var(--color-line);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+	border-bottom: 1px solid transparent;
+	background: var(--color-canvas);
+	transition: border-color $header-transition, background-color $header-transition;
+
+	&--compact {
+		border-bottom-color: var(--color-line);
+
+		@supports (backdrop-filter: blur(1px)) {
+			background: color-mix(in srgb, var(--color-canvas) 82%, transparent);
+			backdrop-filter: saturate(180%) blur(14px);
+		}
+	}
+
+	&__inner {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 1.5rem;
+		max-width: 1080px;
+		margin: 0 auto;
+		padding: 2rem 2rem 1.5rem;
+		transition: padding $header-transition, gap $header-transition;
+	}
+
+	&--compact &__inner {
+		gap: 1rem;
+		padding: 0.6rem 2rem;
+	}
 
 	&__photo {
+		width: 6.5rem;
 		overflow: hidden;
 		border-radius: 20px;
 		box-shadow: 0 0 0 1px var(--color-line);
+		transition: width $header-transition, border-radius $header-transition;
 
 		img {
 			display: block;
@@ -109,74 +158,118 @@ button:focus-visible {
 		}
 	}
 
+	&--compact &__photo {
+		width: 2.5rem;
+		border-radius: 10px;
+	}
+
+	&__id {
+		min-width: 0;
+	}
+
 	&__name {
-		margin: 0 0 0.4rem;
-		font-size: clamp(2.25rem, 4vw, 3rem);
+		margin: 0;
+		font-size: 2rem;
 		font-weight: 600;
-		line-height: 1.05;
-		letter-spacing: -0.035em;
-		text-wrap: balance;
+		line-height: 1.15;
+		letter-spacing: -0.03em;
+		transition: font-size $header-transition, letter-spacing $header-transition;
+	}
+
+	&--compact &__name {
+		font-size: 0.9375rem;
+		letter-spacing: -0.01em;
 	}
 
 	&__position {
-		margin: 0 0 1.25rem;
-		font-size: 1.125rem;
+		margin: 0.3rem 0 0;
+		overflow: hidden;
+		font-size: 1.0625rem;
 		color: var(--color-ink-soft);
+		text-overflow: ellipsis;
 		text-wrap: balance;
+		transition: font-size $header-transition, margin $header-transition,
+			color $header-transition;
 	}
 
-	// Факты через тонкие вертикальные разделители, а не через «·».
-	// Разделитель стоит перед каждым фактом, а список сдвинут влево и обрезан
-	// по исходному краю — так черта в начале каждой строки (в том числе после
-	// переноса) не видна.
-	&__facts {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.3rem 0;
-		margin: 0 0 0 -1.5rem;
-		padding: 0;
-		clip-path: inset(0 0 0 1.5rem);
-		list-style: none;
-		font-size: 0.875rem;
+	&--compact &__position {
+		margin-top: 0;
+		white-space: nowrap;
+		font-size: 0.8125rem;
 		color: var(--color-muted);
+	}
 
-		li {
-			position: relative;
-			padding-left: 1.5rem;
-		}
+	&__facts {
+		margin-top: 0.6rem;
+	}
 
-		li::before {
-			content: "";
-			position: absolute;
-			left: 0.75rem;
-			top: 0.3em;
-			width: 1px;
-			height: 1em;
-			background: var(--color-line-strong);
-		}
+	&--compact &__facts {
+		display: none;
 	}
 
 	&__actions {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.5rem;
-		margin-top: 1.75rem;
+		gap: 0.4rem;
 	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.profile,
+	.profile *,
+	.profile__inner {
+		transition: none !important;
+	}
+}
+
+// Факты через тонкие вертикальные разделители, а не через «·».
+// Разделитель стоит перед каждым фактом, а список сдвинут влево и обрезан
+// по исходному краю — так черта в начале строки (и после переноса) не видна.
+.facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3rem 0;
+	margin: 0 0 0 -1.5rem;
+	padding: 0;
+	clip-path: inset(0 0 0 1.5rem);
+	list-style: none;
+	font-size: 0.875rem;
+	color: var(--color-muted);
+
+	li {
+		position: relative;
+		padding-left: 1.5rem;
+	}
+
+	li::before {
+		content: "";
+		position: absolute;
+		left: 0.75rem;
+		top: 0.3em;
+		width: 1px;
+		height: 1em;
+		background: var(--color-line-strong);
+	}
+}
+
+// Контакты под шапкой — только когда они не влезают в неё
+.intro {
+	display: none;
+	margin: -1rem 0 3rem;
 }
 
 .print-button {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.55rem;
-	height: 2.5rem;
-	padding: 0 1.1rem;
+	gap: 0.5rem;
+	height: 2.25rem;
+	padding: 0 0.95rem;
 	border: 0;
 	border-radius: 8px;
 	background: var(--color-accent);
 	color: var(--color-on-accent);
 	font: inherit;
-	font-size: 0.875rem;
+	font-size: 0.8125rem;
 	font-weight: 500;
 	white-space: nowrap;
 	cursor: pointer;
@@ -199,12 +292,12 @@ button:focus-visible {
 	padding: 0;
 	list-style: none;
 
-	.cv &__link {
+	& &__link {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
+		width: 2.25rem;
+		height: 2.25rem;
 		border: 1px solid var(--color-line);
 		border-radius: 8px;
 		background: var(--color-surface);
@@ -238,7 +331,7 @@ button:focus-visible {
 // Оглавление
 .toc {
 	position: sticky;
-	top: 2.5rem;
+	top: calc(var(--header-height) + 2.5rem);
 	align-self: start;
 
 	&__list {
@@ -271,13 +364,14 @@ button:focus-visible {
 
 // Секции
 .section {
-	scroll-margin-top: 2rem;
+	scroll-margin-top: calc(var(--header-height) + 2rem);
 
+	// Приписка (общий стаж) стоит сразу за заголовком, а не висит в углу
 	&__title {
 		display: flex;
-		justify-content: space-between;
+		flex-wrap: wrap;
 		align-items: baseline;
-		gap: 1rem;
+		gap: 0.25rem 0.9rem;
 		margin: 0 0 1.75rem;
 		font-size: 1.375rem;
 		font-weight: 600;
@@ -292,11 +386,6 @@ button:focus-visible {
 		letter-spacing: 0;
 		color: var(--color-muted);
 	}
-}
-
-// Пустой Fade (секция вернула null) не должен давать лишний отступ
-.fade-block:empty {
-	display: none;
 }
 
 // Запись: работа, учёба, курс
@@ -447,55 +536,41 @@ button:focus-visible {
 	}
 }
 
-// Текущее место работы: акцентная точка с мягким пульсом — это реальный статус
-.entry--current {
-	&::after {
-		border-color: var(--color-accent);
-		background: var(--color-accent);
-	}
-
-	.entry__period::before {
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0.35rem;
-		width: 11px;
-		height: 11px;
-		border-radius: 50%;
-		background: var(--color-accent-glow);
-		animation: current-pulse 2.4s var(--ease-out) infinite;
-	}
+// Текущее место работы — закрашенная точка
+.entry--current::after {
+	border-color: var(--color-ink);
+	background: var(--color-ink);
 }
 
-@keyframes current-pulse {
-	from {
-		opacity: 1;
-		transform: scale(1);
-	}
-
-	to {
-		opacity: 0;
-		transform: scale(2.6);
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.entry--current .entry__period::before {
-		animation: none;
-		opacity: 0;
-	}
-}
-
+// Навыки группами: слева название группы, справа теги — та же сетка, что у учёбы
 .skills {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+	display: grid;
+	grid-template-columns: 7.5rem minmax(0, 1fr);
+	gap: 1.5rem;
+	align-items: baseline;
+
+	& + & {
+		margin-top: 1rem;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 0.875rem;
+		font-weight: 400;
+		color: var(--color-muted);
+	}
+
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
 
 	&__item {
-		padding: 0.3rem 0.65rem;
+		padding: 0.25rem 0.6rem;
 		border: 1px solid var(--color-line);
 		border-radius: 6px;
 		background: var(--color-surface);
@@ -519,6 +594,17 @@ button:focus-visible {
 	}
 }
 
+// Контакты уходят из шапки под неё
+@media screen and (max-width: 959.98px) {
+	.profile__actions .contacts {
+		display: none;
+	}
+
+	.intro {
+		display: block;
+	}
+}
+
 // Без оглавления, когда ему не хватает места
 @media screen and (max-width: 900px) {
 	.cv__body {
@@ -530,32 +616,77 @@ button:focus-visible {
 	}
 }
 
-// Телефон
+// Телефон: шапка поменьше, кнопка PDF — только иконка
+@media screen and (max-width: 719.98px) {
+	:root {
+		--header-expanded: 7.5rem;
+		--header-height: 3.5rem;
+	}
+
+	.profile {
+		&__inner {
+			gap: 1rem;
+			padding: 1.25rem 1.25rem 1rem;
+		}
+
+		&--compact &__inner {
+			gap: 0.75rem;
+			padding: 0.5rem 1.25rem;
+		}
+
+		&__photo {
+			width: 4.5rem;
+			border-radius: 16px;
+		}
+
+		&--compact &__photo {
+			width: 2.25rem;
+			border-radius: 10px;
+		}
+
+		&__name {
+			font-size: 1.375rem;
+		}
+
+		&__position {
+			font-size: 0.875rem;
+		}
+
+		&__facts {
+			margin-top: 0.3rem;
+			font-size: 0.8125rem;
+		}
+	}
+
+	.print-button {
+		width: 2.25rem;
+		padding: 0;
+		justify-content: center;
+
+		&__label {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip: rect(0 0 0 0);
+			white-space: nowrap;
+		}
+	}
+}
+
 @media screen and (max-width: 640px) {
 	.cv {
-		padding: 0 1.25rem 4rem;
+		padding: calc(var(--header-expanded) + 2rem) 1.25rem 4rem;
 
 		&__content {
 			gap: 3.5rem;
 		}
 	}
 
-	.profile {
-		grid-template-columns: minmax(0, 1fr);
-		gap: 1.25rem;
-		margin-bottom: 2.5rem;
-		padding: 2.5rem 0 2rem;
-
-		&__photo {
-			width: 4.5rem;
-			border-radius: 16px;
-		}
+	.intro {
+		margin: -0.5rem 0 2.5rem;
 	}
 
-	.section__title {
-		flex-direction: column;
-		gap: 0.2rem;
-	}
 
 	.entry {
 		grid-template-columns: minmax(0, 1fr);
@@ -566,9 +697,9 @@ button:focus-visible {
 		padding-left: 1.6rem;
 	}
 
-	.fade-block {
-		opacity: 1 !important;
-		transform: none !important;
+	.skills {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.4rem;
 	}
 }
 

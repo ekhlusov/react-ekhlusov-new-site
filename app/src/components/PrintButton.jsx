@@ -12,7 +12,7 @@ const PrintButton = () => (
 		onClick={() => window.print()}
 	>
 		<FontAwesomeIcon icon={faArrowDown} />
-		Скачать PDF
+		<span className="print-button__label">Скачать PDF</span>
 	</button>
 );
 

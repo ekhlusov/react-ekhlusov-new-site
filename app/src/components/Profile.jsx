@@ -1,25 +1,14 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Contacts from "./Contacts";
 import PrintButton from "./PrintButton";
 import { DataContext } from "./helpers/data-context";
 import SmoothImage from "react-smooth-image";
 import me from "../assets/images/me.jpg";
-import {
-	declarationOfNumbers,
-	normalizedDuration,
-	totalExperienceMonths,
-} from "./helpers/helpers";
+import { declarationOfNumbers } from "./helpers/helpers";
 
-// В API этих полей нет, а в резюме по российской традиции они ожидаются
-const WORK_FORMAT = "Полная занятость, удалённо или гибрид";
-const RELOCATION = "Не готов к переезду, готов к командировкам";
-
-// Шапка резюме: на экране — во всю ширину над контентом, на бумаге — тоже
-const Profile = () => {
+export const ProfileFacts = ({ className }) => {
 	const data = React.useContext(DataContext);
 	const age = parseInt(data?.age);
-	const experience =
-		totalExperienceMonths(data?.experiences) || data?.experience_total;
 
 	const facts = [
 		[
@@ -28,33 +17,68 @@ const Profile = () => {
 		]
 			.filter(Boolean)
 			.join(", "),
-		experience ? `Опыт ${normalizedDuration(experience)}` : null,
-		WORK_FORMAT,
-		RELOCATION,
 	].filter(Boolean);
 
 	return (
-		<header className="profile">
-			<div className="profile__photo">
-				<SmoothImage src={me} alt={data?.fullName} transitionTime={0.5} />
-			</div>
+		<ul className={`facts ${className}`}>
+			{facts.map(fact => (
+				<li key={fact}>{fact}</li>
+			))}
+		</ul>
+	);
+};
 
-			<div className="profile__head">
-				<h1 className="profile__name">{data?.fullName}</h1>
-				<p className="profile__position">{data?.cvHeadline}</p>
+/*
+ * Шапка всегда сверху (position: fixed). Пока страница в самом верху, она
+ * большая — с крупным фото, должностью и фактами; как только начинают
+ * прокручивать (служебный блок-«датчик» у верха страницы уходит с экрана),
+ * она сжимается в узкую полосу. На узком экране контакты в шапку не
+ * помещаются — их показывает блок .intro под ней (App.jsx).
+ * На бумаге шапка — заголовок документа с фото (print.scss).
+ */
+const Profile = () => {
+	const data = React.useContext(DataContext);
+	const [compact, setCompact] = useState(false);
+	const sentinel = useRef(null);
 
-				<ul className="profile__facts">
-					{facts.map(fact => (
-						<li key={fact}>{fact}</li>
-					))}
-				</ul>
+	useEffect(() => {
+		const node = sentinel.current;
 
-				<div className="profile__actions">
-					<PrintButton />
-					<Contacts />
+		if (!node || typeof IntersectionObserver === "undefined") {
+			return undefined;
+		}
+
+		const observer = new IntersectionObserver(([entry]) =>
+			setCompact(!entry.isIntersecting)
+		);
+		observer.observe(node);
+
+		return () => observer.disconnect();
+	}, []);
+
+	return (
+		<>
+			<div ref={sentinel} className="profile-sentinel" aria-hidden="true" />
+
+			<header className={`profile${compact ? " profile--compact" : ""}`}>
+				<div className="profile__inner">
+					<div className="profile__photo">
+						<SmoothImage src={me} alt={data?.fullName} transitionTime={0.5} />
+					</div>
+
+					<div className="profile__id">
+						<h1 className="profile__name">{data?.fullName}</h1>
+						<p className="profile__position">{data?.cvHeadline}</p>
+						<ProfileFacts className="profile__facts" />
+					</div>
+
+					<div className="profile__actions">
+						<PrintButton />
+						<Contacts />
+					</div>
 				</div>
-			</div>
-		</header>
+			</header>
+		</>
 	);
 };
 

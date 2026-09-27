@@ -1,5 +1,6 @@
 import React from "react";
 import Profile from "./components/Profile";
+import Contacts from "./components/Contacts";
 import SectionNav from "./components/SectionNav";
 import RightContainer from "./components/RightContainer";
 import Skeleton from "./components/Skeleton";
@@ -19,8 +20,13 @@ const App = () => {
 				К опыту работы
 			</a>
 
+			<Profile />
+
 			<div className="cv">
-				<Profile />
+				{/* На узком экране контакты не помещаются в шапку */}
+				<div className="intro">
+					<Contacts />
+				</div>
 
 				<div className="cv__body">
 					<SectionNav />

@@ -3,75 +3,73 @@ import { SECTIONS } from "./helpers/sections";
 
 /*
  * Липкое оглавление слева. Показывает только те секции, что реально
- * отрисовались (пустые секции возвращают null), и подсвечивает ту,
- * что сейчас в верхней части экрана.
+ * отрисовались (пустые секции возвращают null), и подсвечивает ту, что
+ * сейчас читают.
+ *
+ * «Линия чтения» — на 30% высоты экрана под шапкой; активна последняя
+ * секция, чей верх выше линии. Короткие секции внизу страницы до этой
+ * линии никогда не доезжают, поэтому на последних полэкрана прокрутки
+ * линия плавно опускается к низу экрана — и они по очереди становятся
+ * активными.
+ *
+ * Слушаем scroll (passive, не чаще раза в кадр): IntersectionObserver не
+ * даёт события, когда внизу все короткие секции уже целиком на экране.
  */
 const SectionNav = () => {
 	const [items, setItems] = useState([]);
 	const [active, setActive] = useState(null);
-	// После клика по пункту держим его активным, пока идёт плавная прокрутка:
-	// внизу страницы иначе подсветка перескочила бы на последнюю секцию
+	// После клика по пункту держим его активным, пока идёт плавная прокрутка
 	const lockedUntil = useRef(0);
 
 	useEffect(() => {
 		const present = SECTIONS.filter(({ id }) => document.getElementById(id));
 		setItems(present);
-		setActive(present[0]?.id ?? null);
 
-		if (!present.length || typeof IntersectionObserver === "undefined") {
+		if (!present.length) {
 			return undefined;
 		}
 
-		const last = present[present.length - 1].id;
-		const inBand = new Set();
-		let lastVisible = false;
+		let frame = 0;
 
-		// Последняя секция внизу страницы до «активной» полосы не доезжает —
-		// считаем её активной, когда она почти целиком на экране. Иначе
-		// активна верхняя из секций, попавших в полосу.
-		const update = () => {
+		const compute = () => {
+			frame = 0;
+
 			if (Date.now() < lockedUntil.current) {
 				return;
 			}
 
-			if (lastVisible) {
-				setActive(last);
-				return;
-			}
+			const viewport = window.innerHeight;
+			const header = document.querySelector(".profile")?.offsetHeight ?? 0;
+			const base = header + (viewport - header) * 0.3;
+			const remaining =
+				document.documentElement.scrollHeight - viewport - window.scrollY;
+			const progress = Math.min(1, Math.max(0, 1 - remaining / (viewport / 2)));
+			const line = base + progress * (viewport - 1 - base);
 
-			const top = present.find(({ id }) => inBand.has(id));
-			if (top) {
-				setActive(top.id);
+			let current = present[0].id;
+			present.forEach(({ id }) => {
+				if (document.getElementById(id).getBoundingClientRect().top <= line) {
+					current = id;
+				}
+			});
+
+			setActive(current);
+		};
+
+		const schedule = () => {
+			if (!frame) {
+				frame = requestAnimationFrame(compute);
 			}
 		};
 
-		const bandObserver = new IntersectionObserver(
-			entries => {
-				entries.forEach(entry =>
-					entry.isIntersecting
-						? inBand.add(entry.target.id)
-						: inBand.delete(entry.target.id)
-				);
-				update();
-			},
-			// «Активная» полоса — от 15% до 45% высоты экрана
-			{ rootMargin: "-15% 0px -55% 0px" }
-		);
-
-		const lastObserver = new IntersectionObserver(
-			([entry]) => {
-				lastVisible = entry.intersectionRatio >= 0.75;
-				update();
-			},
-			{ threshold: [0, 0.75, 1] }
-		);
-
-		present.forEach(({ id }) => bandObserver.observe(document.getElementById(id)));
-		lastObserver.observe(document.getElementById(last));
+		compute();
+		window.addEventListener("scroll", schedule, { passive: true });
+		window.addEventListener("resize", schedule);
 
 		return () => {
-			bandObserver.disconnect();
-			lastObserver.disconnect();
+			window.removeEventListener("scroll", schedule);
+			window.removeEventListener("resize", schedule);
+			cancelAnimationFrame(frame);
 		};
 	}, []);
 
