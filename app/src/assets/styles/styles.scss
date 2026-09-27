@@ -542,32 +542,13 @@ $header-transition: 350ms var(--ease-out);
 	background: var(--color-ink);
 }
 
-// Навыки группами: слева название группы, справа теги — та же сетка, что у учёбы
 .skills {
-	display: grid;
-	grid-template-columns: 7.5rem minmax(0, 1fr);
-	gap: 1.5rem;
-	align-items: baseline;
-
-	& + & {
-		margin-top: 1rem;
-	}
-
-	&__title {
-		margin: 0;
-		font-size: 0.875rem;
-		font-weight: 400;
-		color: var(--color-muted);
-	}
-
-	&__list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 
 	&__item {
 		padding: 0.25rem 0.6rem;
@@ -697,10 +678,6 @@ $header-transition: 350ms var(--ease-out);
 		padding-left: 1.6rem;
 	}
 
-	.skills {
-		grid-template-columns: minmax(0, 1fr);
-		gap: 0.4rem;
-	}
 }
 
 .no-bottom-margin {
