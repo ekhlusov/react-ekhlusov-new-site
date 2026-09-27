@@ -6,4 +6,5 @@ export const SECTIONS = [
 	{ id: "experience", label: "Опыт работы" },
 	{ id: "education", label: "Образование" },
 	{ id: "courses", label: "Курсы" },
+	{ id: "languages", label: "Языки" },
 ];
