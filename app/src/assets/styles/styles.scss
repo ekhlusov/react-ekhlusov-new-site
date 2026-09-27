@@ -89,7 +89,7 @@ button:focus-visible {
 	&__content {
 		display: flex;
 		flex-direction: column;
-		gap: 3rem;
+		gap: 2.25rem;
 		min-width: 0;
 	}
 }
@@ -372,7 +372,7 @@ $header-transition: 350ms var(--ease-out);
 		flex-wrap: wrap;
 		align-items: baseline;
 		gap: 0.25rem 0.9rem;
-		margin: 0 0 1.25rem;
+		margin: 0 0 1rem;
 		font-size: 1.375rem;
 		font-weight: 600;
 		letter-spacing: -0.02em;
@@ -564,11 +564,11 @@ $header-transition: 350ms var(--ease-out);
 .about {
 	max-width: 65ch;
 	color: var(--color-ink-soft);
-	font-size: 0.875rem;
-	line-height: 1.6;
+	font-size: 0.8125rem;
+	line-height: 1.55;
 
 	p {
-		margin: 0 0 0.35rem;
+		margin: 0 0 0.2rem;
 	}
 
 	p:last-child {
@@ -661,7 +661,7 @@ $header-transition: 350ms var(--ease-out);
 		padding: calc(var(--header-expanded) + 2rem) 1.25rem 4rem;
 
 		&__content {
-			gap: 2.5rem;
+			gap: 2rem;
 		}
 	}
 
