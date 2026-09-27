@@ -78,7 +78,7 @@ button:focus-visible {
 .cv {
 	max-width: 1080px;
 	margin: 0 auto;
-	padding: calc(var(--header-expanded) + 3rem) 2rem 6rem;
+	padding: calc(var(--header-expanded) + 1rem) 2rem 6rem;
 
 	&__body {
 		display: grid;
@@ -255,7 +255,7 @@ $header-transition: 350ms var(--ease-out);
 // Контакты под шапкой — только когда они не влезают в неё
 .intro {
 	display: none;
-	margin: -1rem 0 3rem;
+	margin: 0 0 2.25rem;
 }
 
 .print-button {
@@ -600,7 +600,8 @@ $header-transition: 350ms var(--ease-out);
 // Телефон: шапка поменьше, кнопка PDF — только иконка
 @media screen and (max-width: 719.98px) {
 	:root {
-		--header-expanded: 7.5rem;
+		// имя, должность в две строки и город выше фото — реальная высота ~137px
+		--header-expanded: 8.5rem;
 		--header-height: 3.5rem;
 	}
 
@@ -657,7 +658,7 @@ $header-transition: 350ms var(--ease-out);
 
 @media screen and (max-width: 640px) {
 	.cv {
-		padding: calc(var(--header-expanded) + 2rem) 1.25rem 4rem;
+		padding: calc(var(--header-expanded) + 0.75rem) 1.25rem 4rem;
 
 		&__content {
 			gap: 2rem;
@@ -665,7 +666,7 @@ $header-transition: 350ms var(--ease-out);
 	}
 
 	.intro {
-		margin: -0.5rem 0 2.5rem;
+		margin: 0 0 2rem;
 	}
 
 
