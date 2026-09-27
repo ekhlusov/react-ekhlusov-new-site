@@ -1,5 +1,6 @@
-// Печать = «экспорт в PDF». На бумаге резюме — один лист в одну колонку:
-// шапка с фото и контактами, ниже секции. Всё чёрное, без интерактива.
+// Печать = «экспорт в PDF». Какой бы ни была тема на экране, на бумаге —
+// светлый документ в одну колонку: шапка с фото и контактами, ниже секции.
+// Оглавление, таймлайн, кнопки и анимации скрыты.
 @page {
 	size: A4;
 	margin: 10mm 14mm 11mm;
@@ -7,106 +8,118 @@
 
 @media print {
 	:root {
+		--color-canvas: #fff;
+		--color-surface: #fff;
+		--color-surface-2: #fff;
 		--color-ink: #000;
 		--color-ink-soft: #1f1f1f;
 		--color-muted: #4a4a4a;
 		--color-line: #cfcfcf;
+		--color-line-strong: #cfcfcf;
 		--color-accent: #000;
 	}
 
-	html,
-	body,
-	.cv {
-		background: #fff !important;
+	html body {
+		background: #fff;
 	}
 
-	// Сетка Bootstrap -> одна колонка. Кегль задаём на .cv, а не на body:
-	// body перебивает reboot из bootstrap.scss, который подключён позже
 	.cv {
-		font-size: 9pt;
-		line-height: 1.33;
 		max-width: none;
 		margin: 0;
 		padding: 0;
-		border: 0;
+		// Кегль на .cv, а не на body: body перебивает reboot из bootstrap.scss
+		font-size: 9pt;
+		line-height: 1.33;
 	}
 
-	.cv > .row {
-		display: block;
-		margin: 0;
+	.cv a {
+		color: inherit;
+		text-decoration: none;
 	}
 
-	.cv__aside,
-	.cv__content {
-		width: 100% !important;
-		max-width: 100% !important;
-		padding: 0 !important;
-	}
-
-	.sticky-block {
-		position: static !important;
-		top: auto !important;
+	.skip-link,
+	.toc,
+	.print-button {
+		display: none !important;
 	}
 
 	// Шапка: фото слева, всё остальное справа
 	.profile {
-		display: grid;
 		grid-template-columns: 30mm minmax(0, 1fr);
 		gap: 6mm;
-		align-items: start;
 		margin-bottom: 5mm;
-		padding-bottom: 4mm;
+		padding: 0 0 4mm;
 		border-bottom: 1px solid var(--color-line);
 		break-inside: avoid;
 
 		&__photo {
-			margin: 0;
 			border-radius: 2px;
+			box-shadow: none;
 			filter: grayscale(1);
 		}
 
 		&__name {
-			font-size: 20pt;
 			margin-bottom: 1mm;
+			font-size: 20pt;
+			letter-spacing: -0.02em;
 		}
 
 		&__position {
-			font-size: 12pt;
 			margin-bottom: 2.5mm;
+			font-size: 12pt;
 		}
 
+		// На бумаге факты — обычным шрифтом, по строке на факт
 		&__facts {
-			margin-bottom: 2.5mm;
-			font-size: 9.5pt;
+			display: block;
+			margin-left: 0;
+			clip-path: none;
+			font-size: 9pt;
 
-			li + li {
-				margin-top: 0;
+			li {
+				padding-left: 0;
 			}
+
+			li::before {
+				display: none;
+			}
+		}
+
+		&__actions {
+			display: block;
+			margin-top: 2.5mm;
+			padding-top: 2.5mm;
+			border-top: 1px solid var(--color-line);
 		}
 	}
 
 	// Контакты — в строку, адреса целиком: на бумаге по ним не кликнешь
 	.contacts {
-		display: flex;
-		flex-wrap: wrap;
 		gap: 0.6mm 5mm;
-		margin: 0;
-		padding: 2.5mm 0 0;
 		font-size: 9pt;
 
-		&__item + &__item {
-			margin-top: 0;
+		.cv &__link {
+			width: auto;
+			height: auto;
+			gap: 1.8mm;
+			border: 0;
+			border-radius: 0;
+			background: none;
+			color: inherit;
+		}
+
+		&__text {
+			position: static;
+			width: auto;
+			height: auto;
+			overflow: visible;
+			clip: auto;
 		}
 	}
 
-	a {
-		color: inherit !important;
-		text-decoration: none !important;
-	}
-
-	.print-button,
-	.skip-link {
-		display: none !important;
+	.cv__body,
+	.cv__content {
+		display: block;
 	}
 
 	.fade-block {
@@ -117,35 +130,64 @@
 	}
 
 	.section {
-		& + & {
-			margin-top: 5mm;
-		}
-
 		&__title {
 			margin-bottom: 3mm;
 			padding-bottom: 1.2mm;
+			border-bottom: 1px solid var(--color-line);
 			font-size: 12pt;
 			break-after: avoid;
 		}
 
 		&__title-aside {
+			font-family: var(--font-base);
 			font-size: 9.5pt;
 		}
 	}
 
-	.entry {
+	// Таймлайн -> классическая запись: слева даты, справа содержание
+	.entry,
+	.entry--job {
+		display: grid;
 		grid-template-columns: 31mm minmax(0, 1fr);
 		gap: 5mm;
+		padding-left: 0;
 
 		& + & {
 			margin-top: 4mm;
 		}
 
-		&__period {
+		&::before,
+		&::after {
+			display: none;
+		}
+	}
+
+	.entry {
+		&__period,
+		.entry--job &__period {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0;
+			margin: 0;
+			font-family: var(--font-base);
 			font-size: 8.5pt;
+
+			&::before {
+				display: none;
+			}
 		}
 
-		&__title {
+		.entry--job &__duration {
+			margin: 1mm 0 0;
+			padding: 0;
+			border: 0;
+			font-size: 8.5pt;
+			color: var(--color-ink-soft);
+			font-weight: 500;
+		}
+
+		&__title,
+		.entry--job &__title {
 			font-size: 11pt;
 		}
 
@@ -162,6 +204,7 @@
 
 		&__desc {
 			font-size: 9pt;
+			line-height: 1.33;
 
 			p {
 				margin-bottom: 0.3mm;
@@ -172,6 +215,7 @@
 
 		&__tech {
 			margin-top: 2mm;
+			font-family: var(--font-base);
 			font-size: 8.5pt;
 			break-inside: avoid;
 		}
@@ -187,13 +231,15 @@
 
 		&__item {
 			padding: 0 1.6mm;
+			border-radius: 3px;
+			font-family: var(--font-base);
 			font-size: 8.5pt;
-			background: none;
 		}
 	}
 
 	.about {
 		max-width: none;
+		line-height: 1.33;
 
 		p {
 			margin-bottom: 1mm;

@@ -3,14 +3,14 @@
 	&__photo,
 	&__line {
 		display: block;
-		border-radius: 4px;
-		background: var(--color-canvas);
+		border-radius: 6px;
+		background: var(--color-surface-2);
 		animation: skeleton-pulse 1.4s var(--ease-out) infinite alternate;
 	}
 
 	&__photo {
 		aspect-ratio: 1;
-		margin-bottom: 1.5rem;
+		border-radius: 20px;
 	}
 
 	&__line {
@@ -18,11 +18,8 @@
 		margin-bottom: 0.75rem;
 	}
 
-	&__entry {
-		display: grid;
-		grid-template-columns: 9.5rem minmax(0, 1fr);
-		gap: 1.5rem;
-		margin-top: 2rem;
+	&__entry + &__entry {
+		margin-top: 1rem;
 	}
 }
 
@@ -36,16 +33,5 @@
 	.skeleton__photo,
 	.skeleton__line {
 		animation: none;
-	}
-}
-
-@media screen and (max-width: 767.98px) {
-	.skeleton__photo {
-		width: 7rem;
-	}
-
-	.skeleton__entry {
-		grid-template-columns: minmax(0, 1fr);
-		gap: 0;
 	}
 }

@@ -11,7 +11,7 @@ const About = () => {
 	}
 
 	return (
-		<section className="section section--about">
+		<section id="about" className="section section--about">
 			<SectionTitle text="Обо мне" />
 			<div className="about">{parse(data.about)}</div>
 		</section>

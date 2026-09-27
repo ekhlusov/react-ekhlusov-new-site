@@ -10,7 +10,7 @@ const Courses = () => {
 	}
 
 	return (
-		<section className="section section--courses">
+		<section id="courses" className="section section--courses">
 			<SectionTitle text="Курсы и повышение квалификации" />
 
 			{data.courses.map(({ year = null, title = null, url = null, description = null }) => (

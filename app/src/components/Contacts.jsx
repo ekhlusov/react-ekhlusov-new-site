@@ -11,7 +11,8 @@ import copy from "copy-to-clipboard";
 
 const EMAIL = "ekhlusov@gmail.com";
 
-// text — то, что видно на экране и на бумаге, поэтому это полный адрес без https://
+// text — полный адрес без https://: на экране он в подсказке и для скринридера,
+// на бумаге печатается рядом с иконкой
 const contacts = [
 	{
 		title: "Почта",
@@ -59,18 +60,15 @@ const Contacts = () => (
 
 			return (
 				<li key={item.title} className="contacts__item">
-					<FontAwesomeIcon
-						icon={item.icon}
-						className="contacts__icon"
-						fixedWidth
-						title={item.title}
-					/>
 					<a
+						className="contacts__link"
 						href={item.link}
+						title={`${item.title}: ${item.text}`}
 						onClick={item.onClick}
 						{...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
 					>
-						{item.text}
+						<FontAwesomeIcon icon={item.icon} className="contacts__icon" fixedWidth />
+						<span className="contacts__text">{item.text}</span>
 					</a>
 				</li>
 			);

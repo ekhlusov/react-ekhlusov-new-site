@@ -12,7 +12,7 @@ const Education = () => {
 	}
 
 	return (
-		<section className="section section--education">
+		<section id="education" className="section section--education">
 			<SectionTitle text="Образование" />
 
 			{data.education.map((item, index) => (

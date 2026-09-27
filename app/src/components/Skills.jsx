@@ -10,7 +10,7 @@ const Skills = () => {
 	}
 
 	return (
-		<section className="section section--skills">
+		<section id="skills" className="section section--skills">
 			<SectionTitle text="Ключевые навыки" />
 
 			<ul className="skills" translate="no">

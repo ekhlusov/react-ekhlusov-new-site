@@ -1,20 +1,25 @@
 $transition: 250ms var(--ease-out);
-$date-column: 9.5rem;
 
-// Base
-html {
-	background: var(--color-canvas);
-}
-
-body {
-	margin: 0;
+// Base. `html body`, а не `body`: reboot из bootstrap.scss подключается позже
+html body {
 	background: var(--color-canvas);
 	color: var(--color-ink);
 	font-family: var(--font-base);
 	font-size: 15px;
-	line-height: 1.55;
+	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+::selection {
+	background: var(--color-accent);
+	color: var(--color-on-accent);
 }
 
 a,
@@ -23,10 +28,10 @@ button {
 	-webkit-tap-highlight-color: transparent;
 }
 
-a {
+.cv a {
 	color: var(--color-ink);
 	text-decoration: underline;
-	text-decoration-color: var(--color-line);
+	text-decoration-color: var(--color-line-strong);
 	text-underline-offset: 3px;
 	transition: color $transition, text-decoration-color $transition;
 
@@ -34,58 +39,68 @@ a {
 		color: var(--color-accent);
 		text-decoration-color: currentColor;
 	}
+}
 
-	&:focus-visible {
-		outline: 2px solid var(--color-accent);
-		outline-offset: 2px;
-		border-radius: 2px;
-	}
+a:focus-visible,
+button:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+	border-radius: 6px;
 }
 
 // Появляется только при фокусе с клавиатуры
 .skip-link {
 	position: absolute;
 	left: 1rem;
-	top: -3rem;
+	top: -3.5rem;
 	z-index: 1;
 	padding: 0.5rem 0.9rem;
-	border-radius: 6px;
+	border-radius: 8px;
 	background: var(--color-ink);
-	color: var(--color-paper);
+	color: var(--color-canvas);
+	text-decoration: none;
 	transition: top $transition;
 
 	&:focus {
 		top: 1rem;
-		color: var(--color-paper);
+		color: var(--color-canvas);
 	}
 }
 
-// Лист резюме
+// Каркас: шапка во всю ширину, ниже оглавление + контент
 .cv {
-	max-width: 1120px;
-	margin: 2rem auto;
-	padding: 3rem 2.5rem;
-	background: var(--color-paper);
-	border: 1px solid var(--color-line);
-	border-radius: 4px;
+	max-width: 1080px;
+	margin: 0 auto;
+	padding: 0 2rem 6rem;
+
+	&__body {
+		display: grid;
+		grid-template-columns: 11rem minmax(0, 1fr);
+		gap: 4rem;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 4.5rem;
+		min-width: 0;
+	}
 }
 
-.cv__aside {
-	padding-right: 2rem;
-}
-
-// Профиль (левая колонка на экране, шапка на бумаге)
+// Шапка
 .profile {
+	display: grid;
+	grid-template-columns: 6rem minmax(0, 1fr);
+	gap: 1.75rem;
+	align-items: start;
+	margin-bottom: 3.5rem;
+	padding: 4.5rem 0 3rem;
+	border-bottom: 1px solid var(--color-line);
+
 	&__photo {
 		overflow: hidden;
-		border-radius: 4px;
-		margin-bottom: 1.5rem;
-		filter: grayscale(1) contrast(0.95);
-		transition: filter 500ms var(--ease-out);
-
-		&:hover {
-			filter: none;
-		}
+		border-radius: 20px;
+		box-shadow: 0 0 0 1px var(--color-line);
 
 		img {
 			display: block;
@@ -95,185 +110,245 @@ a {
 	}
 
 	&__name {
-		margin: 0 0 0.35rem;
-		font-size: 2rem;
-		font-weight: 700;
-		line-height: 1.1;
-		letter-spacing: -0.02em;
+		margin: 0 0 0.4rem;
+		font-size: clamp(2.25rem, 4vw, 3rem);
+		font-weight: 600;
+		line-height: 1.05;
+		letter-spacing: -0.035em;
 		text-wrap: balance;
 	}
 
 	&__position {
-		margin: 0 0 1rem;
-		font-size: 1.1rem;
-		font-weight: 500;
-		line-height: 1.35;
+		margin: 0 0 1.25rem;
+		font-size: 1.125rem;
 		color: var(--color-ink-soft);
 		text-wrap: balance;
 	}
 
+	// Факты через тонкие вертикальные разделители, а не через «·».
+	// Разделитель стоит перед каждым фактом, а список сдвинут влево и обрезан
+	// по исходному краю — так черта в начале каждой строки (в том числе после
+	// переноса) не видна.
 	&__facts {
-		margin: 0 0 1.25rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3rem 0;
+		margin: 0 0 0 -1.5rem;
 		padding: 0;
+		clip-path: inset(0 0 0 1.5rem);
 		list-style: none;
 		font-size: 0.875rem;
 		color: var(--color-muted);
 
-		li + li {
-			margin-top: 0.15rem;
+		li {
+			position: relative;
+			padding-left: 1.5rem;
+		}
+
+		li::before {
+			content: "";
+			position: absolute;
+			left: 0.75rem;
+			top: 0.3em;
+			width: 1px;
+			height: 1em;
+			background: var(--color-line-strong);
 		}
 	}
-}
 
-.contacts {
-	margin: 0 0 1.5rem;
-	padding: 1.25rem 0 0;
-	list-style: none;
-	border-top: 1px solid var(--color-line);
-	font-size: 0.875rem;
-
-	&__item {
+	&__actions {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.6rem;
-
-		& + & {
-			margin-top: 0.35rem;
-		}
-	}
-
-	&__icon {
-		flex: none;
-		color: var(--color-muted);
-	}
-
-	a {
-		overflow-wrap: anywhere;
+		gap: 0.5rem;
+		margin-top: 1.75rem;
 	}
 }
 
 .print-button {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.6rem;
-	padding: 0.6rem 1rem;
-	border: 1px solid var(--color-line);
-	border-radius: 6px;
-	background: var(--color-paper);
-	color: var(--color-ink);
+	gap: 0.55rem;
+	height: 2.5rem;
+	padding: 0 1.1rem;
+	border: 0;
+	border-radius: 8px;
+	background: var(--color-accent);
+	color: var(--color-on-accent);
 	font: inherit;
 	font-size: 0.875rem;
 	font-weight: 500;
-	cursor: pointer;
 	white-space: nowrap;
-	transition: background-color $transition, border-color $transition, transform 150ms var(--ease-out);
-
-	svg {
-		color: var(--color-muted);
-	}
+	cursor: pointer;
+	transition: background-color $transition, transform 150ms var(--ease-out);
 
 	&:hover {
-		background: var(--color-chip);
-		border-color: #d3d0c9;
+		background: var(--color-accent-hover);
 	}
 
 	&:active {
 		transform: scale(0.98);
 	}
+}
 
-	&:focus-visible {
-		outline: 2px solid var(--color-accent);
-		outline-offset: 2px;
+.contacts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	.cv &__link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border: 1px solid var(--color-line);
+		border-radius: 8px;
+		background: var(--color-surface);
+		color: var(--color-ink-soft);
+		text-decoration: none;
+		transition: color $transition, background-color $transition, border-color $transition,
+			transform 150ms var(--ease-out);
+
+		&:hover {
+			border-color: var(--color-line-strong);
+			background: var(--color-surface-2);
+			color: var(--color-ink);
+		}
+
+		&:active {
+			transform: scale(0.96);
+		}
+	}
+
+	// На экране адрес только для скринридера (и в подсказке), на печати — виден
+	&__text {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+	}
+}
+
+// Оглавление
+.toc {
+	position: sticky;
+	top: 2.5rem;
+	align-self: start;
+
+	&__list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-left: 1px solid var(--color-line);
+	}
+
+	.cv &__link {
+		display: block;
+		margin-left: -1px;
+		padding: 0.4rem 0 0.4rem 1rem;
+		border-left: 1px solid transparent;
+		font-size: 0.875rem;
+		color: var(--color-muted);
+		text-decoration: none;
+		transition: color $transition, border-color $transition;
+
+		&:hover {
+			color: var(--color-ink);
+		}
+
+		&--active {
+			border-left-color: var(--color-accent);
+			color: var(--color-ink);
+		}
 	}
 }
 
 // Секции
 .section {
-	& + & {
-		margin-top: 2.75rem;
-	}
+	scroll-margin-top: 2rem;
 
 	&__title {
 		display: flex;
 		justify-content: space-between;
 		align-items: baseline;
 		gap: 1rem;
-		margin: 0 0 1.5rem;
-		padding-bottom: 0.6rem;
-		border-bottom: 1px solid var(--color-line);
-		font-size: 1.25rem;
+		margin: 0 0 1.75rem;
+		font-size: 1.375rem;
 		font-weight: 600;
-		letter-spacing: -0.01em;
-		color: var(--color-accent);
+		letter-spacing: -0.02em;
+		color: var(--color-ink);
 	}
 
 	&__title-aside {
-		font-size: 0.875rem;
-		font-weight: 500;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		font-weight: 400;
 		letter-spacing: 0;
 		color: var(--color-muted);
 	}
 }
 
-// Fade оборачивает несколько секций — отступ между ним и «Опытом работы»
-.fade-block {
-	margin-top: 2.75rem;
+// Пустой Fade (секция вернула null) не должен давать лишний отступ
+.fade-block:empty {
+	display: none;
 }
 
-// Запись: место работы, учёба, курс. Слева даты, справа содержание — как на hh
+// Запись: работа, учёба, курс
 .entry {
 	display: grid;
-	grid-template-columns: $date-column minmax(0, 1fr);
+	grid-template-columns: 7.5rem minmax(0, 1fr);
 	gap: 1.5rem;
 
 	& + & {
-		margin-top: 2rem;
+		margin-top: 1.75rem;
 	}
 
 	&__period {
 		display: flex;
 		flex-direction: column;
+		font-family: var(--font-mono);
 		font-size: 0.8125rem;
-		line-height: 1.45;
+		line-height: 1.5;
 		color: var(--color-muted);
 	}
 
-	&__duration {
-		margin-top: 0.35rem;
-		color: var(--color-ink-soft);
-		font-weight: 500;
-	}
-
 	&__head {
-		margin-bottom: 0.75rem;
+		margin-bottom: 0.9rem;
 	}
 
 	&__title {
-		display: inline;
+		display: block;
 		margin: 0;
-		font-size: 1.1rem;
+		font-size: 1.0625rem;
 		font-weight: 600;
-		line-height: 1.3;
+		line-height: 1.35;
+		letter-spacing: -0.01em;
 	}
 
 	&__place {
-		margin-left: 0.5rem;
+		margin-left: 0.6rem;
 		font-size: 0.875rem;
 		color: var(--color-muted);
 	}
 
 	&__position {
-		margin: 0.2rem 0 0;
-		font-weight: 600;
+		margin: 0.15rem 0 0;
+		font-weight: 500;
 		color: var(--color-ink-soft);
 	}
 
 	&__desc {
-		font-size: 0.9375rem;
 		color: var(--color-ink-soft);
+		line-height: 1.65;
 
 		p {
-			margin: 0 0 0.3rem;
+			margin: 0 0 0.4rem;
 		}
 
 		strong {
@@ -289,13 +364,14 @@ a {
 	}
 
 	&__tech {
-		margin: 0.75rem 0 0;
-		font-size: 0.875rem;
+		margin: 1rem 0 0;
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		line-height: 1.6;
 		color: var(--color-muted);
 	}
 
 	&__label {
-		font-weight: 600;
 		color: var(--color-ink-soft);
 	}
 
@@ -309,26 +385,121 @@ a {
 		margin-top: 0.3rem;
 		font-size: 0.875rem;
 	}
+}
 
-	// У учёбы и курсов заголовок — отдельной строкой
-	&:not(.entry--job) &__title {
-		display: block;
+// Опыт работы — таймлайн: линия слева, точка у каждого места работы
+.entry--job {
+	position: relative;
+	display: block;
+	padding-left: 2rem;
+
+	& + & {
+		margin-top: 3rem;
+	}
+
+	// линия до следующей точки
+	&::before {
+		content: "";
+		position: absolute;
+		left: 5px;
+		top: 1rem;
+		bottom: -3rem;
+		width: 1px;
+		background: var(--color-line);
+	}
+
+	&:last-of-type::before {
+		display: none;
+	}
+
+	// точка
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0.35rem;
+		width: 11px;
+		height: 11px;
+		border: 2px solid var(--color-line-strong);
+		border-radius: 50%;
+		background: var(--color-canvas);
+	}
+
+	.entry__period {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.3rem 0.5rem;
+		margin-bottom: 0.6rem;
+	}
+
+	.entry__duration {
+		padding: 0.05rem 0.5rem;
+		border: 1px solid var(--color-line);
+		border-radius: 6px;
+		font-size: 0.75rem;
+		color: var(--color-ink-soft);
+	}
+
+	.entry__title {
+		display: inline;
+		font-size: 1.1875rem;
+	}
+}
+
+// Текущее место работы: акцентная точка с мягким пульсом — это реальный статус
+.entry--current {
+	&::after {
+		border-color: var(--color-accent);
+		background: var(--color-accent);
+	}
+
+	.entry__period::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0.35rem;
+		width: 11px;
+		height: 11px;
+		border-radius: 50%;
+		background: var(--color-accent-glow);
+		animation: current-pulse 2.4s var(--ease-out) infinite;
+	}
+}
+
+@keyframes current-pulse {
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	to {
+		opacity: 0;
+		transform: scale(2.6);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.entry--current .entry__period::before {
+		animation: none;
+		opacity: 0;
 	}
 }
 
 .skills {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.4rem;
+	gap: 0.5rem;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 
 	&__item {
-		padding: 0.2rem 0.6rem;
+		padding: 0.3rem 0.65rem;
 		border: 1px solid var(--color-line);
-		border-radius: 4px;
-		background: var(--color-chip);
+		border-radius: 6px;
+		background: var(--color-surface);
+		font-family: var(--font-mono);
 		font-size: 0.8125rem;
 		color: var(--color-ink-soft);
 	}
@@ -337,9 +508,10 @@ a {
 .about {
 	max-width: 65ch;
 	color: var(--color-ink-soft);
+	line-height: 1.7;
 
 	p {
-		margin: 0 0 0.75rem;
+		margin: 0 0 0.9rem;
 	}
 
 	p:last-child {
@@ -347,65 +519,51 @@ a {
 	}
 }
 
-// Планшет: колонки ещё рядом, но теснее
-@media screen and (max-width: 991.98px) {
-	.cv {
-		padding: 2rem 1.5rem;
-	}
-
-	.cv__aside {
-		padding-right: 1rem;
-	}
-
-	.entry {
+// Без оглавления, когда ему не хватает места
+@media screen and (max-width: 900px) {
+	.cv__body {
 		grid-template-columns: minmax(0, 1fr);
-		gap: 0.35rem;
 	}
 
-	.entry__period {
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: 0 0.3rem;
-	}
-
-	.entry__duration {
-		margin-top: 0;
-
-		&::before {
-			content: "· ";
-		}
+	.toc {
+		display: none;
 	}
 }
 
-// Телефон: одна колонка
-@media screen and (max-width: 767.98px) {
+// Телефон
+@media screen and (max-width: 640px) {
 	.cv {
-		margin: 0;
-		padding: 1.5rem 1rem 2.5rem;
-		border: 0;
-		border-radius: 0;
-	}
+		padding: 0 1.25rem 4rem;
 
-	.cv__aside {
-		padding-right: calc(var(--bs-gutter-x) * 0.5);
+		&__content {
+			gap: 3.5rem;
+		}
 	}
 
 	.profile {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 1.25rem;
 		margin-bottom: 2.5rem;
+		padding: 2.5rem 0 2rem;
 
 		&__photo {
-			width: 7rem;
-			margin-bottom: 1.25rem;
-		}
-
-		&__name {
-			font-size: 1.75rem;
+			width: 4.5rem;
+			border-radius: 16px;
 		}
 	}
 
 	.section__title {
 		flex-direction: column;
-		gap: 0.15rem;
+		gap: 0.2rem;
+	}
+
+	.entry {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.25rem;
+	}
+
+	.entry--job {
+		padding-left: 1.6rem;
 	}
 
 	.fade-block {

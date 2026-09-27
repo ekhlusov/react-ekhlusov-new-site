@@ -1,16 +1,41 @@
-// Тёплый монохром + один сдержанный акцент. Нейтральные — по мотивам
-// .claude/design-md/notion (hairline, charcoal, surface), акцент свой.
+// Токены в духе Linear (тёмная тема) и Vercel (светлая) —
+// см. .claude/design-md/linear.app и .claude/design-md/vercel.
+// Тема выбирается по настройке системы; на печати всегда светлая (print.scss).
 :root {
-	--color-ink: #1c1c1e;
-	--color-ink-soft: #37352f;
-	--color-muted: #6f6e6b;
-	--color-line: #e5e3df;
-	--color-paper: #ffffff;
-	--color-canvas: #f6f5f4;
-	--color-chip: #fafaf9;
-	--color-accent: #2d4a68;
+	color-scheme: light dark;
+
+	--color-canvas: #fafafa;
+	--color-surface: #ffffff;
+	--color-surface-2: #f2f2f3;
+	--color-line: #e8e8ea;
+	--color-line-strong: #d4d4d8;
+	--color-ink: #171717;
+	--color-ink-soft: #3f3f46;
+	--color-muted: #6b6b70;
+	--color-accent: #5e6ad2;
+	--color-accent-hover: #4f5bc4;
+	--color-on-accent: #ffffff;
+	--color-accent-glow: rgba(94, 106, 210, 0.35);
 
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-	--font-base: "Onest", "Helvetica Neue", Arial, sans-serif;
+	--font-base: "Geist", "Helvetica Neue", Arial, sans-serif;
+	--font-mono: "Geist Mono", "SF Mono", Menlo, monospace;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+	:root {
+		--color-canvas: #08090a;
+		--color-surface: #0f1011;
+		--color-surface-2: #16171a;
+		--color-line: #23252a;
+		--color-line-strong: #34343a;
+		--color-ink: #f7f8f8;
+		--color-ink-soft: #d0d6e0;
+		--color-muted: #8a8f98;
+		--color-accent: #7c86e6;
+		--color-accent-hover: #939cf0;
+		--color-on-accent: #08090a;
+		--color-accent-glow: rgba(124, 134, 230, 0.4);
+	}
 }

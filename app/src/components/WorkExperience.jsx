@@ -24,14 +24,17 @@ const WorkExperience = () => {
 		totalExperienceMonths(data?.experiences) || data?.experience_total;
 
 	return (
-		<section className="section section--experience">
+		<section id="experience" className="section section--experience">
 			<SectionTitle
 				text="Опыт работы"
 				aside={totalMonths ? normalizedDuration(totalMonths) : null}
 			/>
 
 			{data?.experiences?.map((item, index) => (
-				<article key={index} className="entry entry--job">
+				<article
+					key={index}
+					className={`entry entry--job${item?.endDate ? "" : " entry--current"}`}
+				>
 					<WorkPeriod period={{ from: item?.startDate, to: item?.endDate }} />
 
 					<div className="entry__body">

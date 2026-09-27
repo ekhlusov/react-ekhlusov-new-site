@@ -1,5 +1,4 @@
 import React from "react";
-import { Col, Container, Row } from "reactstrap";
 
 // Заглушка на время загрузки — повторяет форму страницы, чтобы она не прыгала
 const Line = ({ width }) => (
@@ -7,31 +6,30 @@ const Line = ({ width }) => (
 );
 
 const Skeleton = () => (
-	<Container className="cv" aria-busy="true" aria-label="Резюме загружается…">
-		<Row>
-			<Col md="4" className="cv__aside">
-				<span className="skeleton__photo" />
-				<Line width="80%" />
-				<Line width="65%" />
-				<Line width="50%" />
-			</Col>
-
-			<Col md="8" className="cv__content">
+	<div className="cv" aria-busy="true" aria-label="Резюме загружается…">
+		<div className="profile">
+			<span className="skeleton__photo" />
+			<div className="profile__head">
+				<Line width="45%" />
 				<Line width="35%" />
+				<Line width="70%" />
+			</div>
+		</div>
+
+		<div className="cv__body">
+			<div />
+			<div className="cv__content">
 				{[0, 1, 2].map(key => (
 					<div className="skeleton__entry" key={key}>
-						<Line width="100%" />
-						<div>
-							<Line width="45%" />
-							<Line width="95%" />
-							<Line width="90%" />
-							<Line width="70%" />
-						</div>
+						<Line width="30%" />
+						<Line width="50%" />
+						<Line width="95%" />
+						<Line width="85%" />
 					</div>
 				))}
-			</Col>
-		</Row>
-	</Container>
+			</div>
+		</div>
+	</div>
 );
 
 export default Skeleton;
