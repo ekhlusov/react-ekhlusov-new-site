@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
-import { faGithub, faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
+import { faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
 import copy from "copy-to-clipboard";
 
 // Логотипа MAX нет в FontAwesome — контур взят из официального max.ru/favicon.svg
@@ -39,12 +39,6 @@ const contacts = [
 		link: "https://max.ru/u/f9LHodD0cOLSJeQ9Uq4LUiYNXn3_qxLbPflEWBB-QWcQXgTIwGewqZbJKlQ",
 		text: "MAX",
 		Icon: MaxIcon,
-	},
-	{
-		title: "GitHub",
-		link: "https://github.com/ekhlusov",
-		text: "github.com/ekhlusov",
-		icon: faGithub,
 	},
 ];
 
