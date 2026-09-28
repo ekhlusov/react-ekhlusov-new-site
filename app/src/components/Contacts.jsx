@@ -1,12 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAt, faBriefcase } from "@fortawesome/free-solid-svg-icons";
-import {
-	faGithub,
-	faLinkedinIn,
-	faTelegramPlane,
-	faVk,
-} from "@fortawesome/free-brands-svg-icons";
+import { faAt } from "@fortawesome/free-solid-svg-icons";
+import { faGithub, faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
 import copy from "copy-to-clipboard";
 
 const EMAIL = "ekhlusov@gmail.com";
@@ -32,24 +27,6 @@ const contacts = [
 		link: "https://github.com/ekhlusov",
 		text: "github.com/ekhlusov",
 		icon: faGithub,
-	},
-	{
-		title: "Хабр Карьера",
-		link: "https://career.habr.com/ekhlusov",
-		text: "career.habr.com/ekhlusov",
-		icon: faBriefcase,
-	},
-	{
-		title: "LinkedIn",
-		link: "https://www.linkedin.com/ekhlusov",
-		text: "linkedin.com/ekhlusov",
-		icon: faLinkedinIn,
-	},
-	{
-		title: "ВКонтакте",
-		link: "https://vk.com/ekhlusov",
-		text: "vk.com/ekhlusov",
-		icon: faVk,
 	},
 ];
 
